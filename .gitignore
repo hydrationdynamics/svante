@@ -1,0 +1,34 @@
+# python tooling
+################
+.mypy_cache/
+/.coverage*
+/.nox/
+/.python-version
+/.pytype/
+/dist/
+/docs/_build/
+/src/*.egg-info/
+__pycache__/
+.cache
+.eggs
+.egg
+.xprocess
+.ropeproject
+
+# logs
+######
+logs/
+
+# OS-generated files
+####################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+thumbs.db
+Thumbs.db
+
+# generated data
+################
+tests/data
