@@ -1,0 +1,31 @@
+[[inputs]]
+uri = "http://generisbio.com/hydrationdynamics/Mb_H2O.tsv"
+T = {col=0, uncertainty=0.3}
+rate = {name="k", uncertainties="±k"}
+
+[[inputs]]
+uri = "http://generisbio.com/hydrationdynamics/Mb_D2O.tsv"
+T = {col=0, uncertainty=0.3}
+rate = {name="k", uncertainties="±k"}
+
+[combined]
+title = "Myoglobin dielectric relaxation"
+filename = "mb_dielectric_relaxation.tsv"
+
+[[combined.rates]]
+name = "k_H2O"
+title = "\\rm Mb in H_2O"
+
+[[combined.rates]]
+name = "k_D2O"
+title = "\\rm Mb in D_2O"
+
+[plot]
+secondary_axis_units = "C"
+add_fit_values = true
+
+[[plot.ratios]]
+numerator = 'k_H2O'
+denominator = 'k_D2O'
+name = "KIE"
+title = '\\rm H_2O/D_2O ratio'

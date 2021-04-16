@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# standard library imports
+from pathlib import Path
+
 # third-party imports
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,17 +40,17 @@ H2O_RATE_COL = "k_{H_2O}, s^{-1}"
 D2O_RATE_COL = "k_{D_2O}, s^{-1}"
 COLORS = {"H2O": "blue", "D2O": "orange", "KIE": "green"}
 
-GLOBAL_STATS = StatDict()
-GLOBAL_STATS["Δ H"] = 4223  # , 20.02, "kJ/mol", desc='Activation Enthalpy',)
-print(GLOBAL_STATS)
-b = Stat(23.37, units="K", sig_digits=3, desc="Temperature")
-print(b)
-c = Stat("This is not a quantity [or is it?]", desc="random description")
-print(c)
-d = Stat(True, desc="test of boolean")
-print(d)
-
-sys.exit(1)
+# GLOBAL_STATS = StatDict()
+# GLOBAL_STATS["Δ H"] = 4223  # , 20.02, "kJ/mol", desc='Activation Enthalpy',)
+# print(GLOBAL_STATS)
+# b = Stat(23.37, units="K", sig_digits=3, desc="Temperature")
+# print(b)
+# c = Stat("This is not a quantity [or is it?]", desc="random description")
+# print(c)
+# d = Stat(True, desc="test of boolean")
+# print(d)
+#
+# sys.exit(1)
 
 
 def inverse_kilokelvin_to_c(kK: float) -> float:
@@ -60,13 +63,32 @@ def c_to_inverse_kilokelvin(c: float) -> float:
     return 1000.0 / (c + ZERO_C)
 
 
-def main(
-    datafile: str,
-    nature: bool = typer.Option(False, help="Use Nature style"),
-    show_fit: bool = typer.Option(False, help="Show fit parameters"),
-):
+def plot(
+    config_file: Path,
+    nature: bool,
+    verbose: bool = False,
+) -> None:
     """Plot dielectric relaxation"""
     df = pd.read_csv(datafile, sep="\t", index_col=0)
+    for ratio in conf['combined']['ratio']:
+        num = ratio['numerator']
+        denom = ratio['denominator']
+        ratio_name = ratio['name']
+        uratio_name = '+' + ratio_name
+        T_uncert_ratio_col = f'±T.{ratio_name}'
+        T_uncert_num_col = f'±T.{num}'
+        T_uncert_denom_col = f'±T.{denom}'
+        unum = unumpy.uarray(combined[num], combined['±'+num])
+        udenom= unumpy.uarray(combined[denom], combined['±'+denom])
+        uratio = unum / udenom
+        print(f'uratio={uratio}')
+        combined[ratio_name] = unumpy.to_nominal_values(uratio)
+        combined[uratio_name] = unumpy.to_std_devs(uratio)
+        combined[T_uncert_ratio_col] = combined[[T_uncert_num_col,
+                                        T_uncert_denom_col]].std(axis=1)
+        output_cols.append(ratio_name)
+        output_cols.append(uratio_name)
+        output_cols.append(T_uncert_ratio_col)
     GLOBAL_STATS["KIE_ratio_min"] = df[RATIO_COL].min()
     GLOBAL_STATS["KIE_ratio_max"] = df[RATIO_COL].max()
     # make fits and plots
@@ -103,7 +125,7 @@ def main(
             log_preexp_std[i] = res[i].bse[0]
             delta_H[i] = -1.0 * res[i].params[1] * R * 1000.0 * LOG10_TO_E
             delta_H_std[i] = res[i].bse[1] * R * 1000.0 * LOG10_TO_E
-            if show_fit:
+            if verbose:
                 print(res[i].summary())
             labelidx = labels.index(i)
             labels[labelidx] = (

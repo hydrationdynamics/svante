@@ -1,40 +1,66 @@
 # -*- coding: utf-8 -*-
 
+# standard library imports
+import sys
+from pathlib import Path
+
 # third-party imports
 import pandas as pd
+from loguru import logger
+from uncertainties import unumpy
 
+# module imports
+from .common import read_toml_file
 
-def main(h2o_file: str, d2o_file: str, output_file: str):
-    """Combine H2O and D2O information.
+def combine(conf_file_path: Path,
+            verbose=False) -> None:
+    """Combine rate info from multiple files."""
+    conf = read_toml_file(conf_file_path, 'configuration file')
+    if 'inputs' not in conf:
+        logger.error('"inputs" not found in configuration file')
+        sys.exit(1)
+    inputs = conf['inputs']
+    outputs = conf['combined']['rates']
+    logger.info(f'reading {len(inputs)} sets of {conf["combined"]["title"]} data:')
+    frames = []
+    output_cols = ['±T']
+    delta_T_cols = []
+    for i, dataset in enumerate(inputs):
+        uri = dataset['uri']
+        df = pd.read_csv(uri, sep="\t", index_col=dataset['T']['col'])
+        df.index.name = 'T'
+        rate_col_in = dataset['rate']['name']
+        rate_col_out = outputs[i]['name']
+        uncertainty_col_in = dataset['rate']['uncertainties']
+        uncertainty_col_out = '±' + rate_col_out
+        output_cols += [rate_col_out, uncertainty_col_out]
+        T_uncertainty_col = f'±T.{rate_col_out}'
+        delta_T_cols.append(T_uncertainty_col)
+        if 'uncertainty' in dataset['T']:
+            df[T_uncertainty_col] = dataset['T']['uncertainty']
+        elif 'uncertainties' in dataset['T']:
+            df[T_uncertainty_col] = df[dataset['T']['uncertainties']]
+        else:
+            logger.error('Neither T uncertainty value nor uncertainty column found')
+            sys.exit(1)
+        n_points = len(df)
+        t_min = df.index.min()
+        t_max = df.index.max()
 
-    Example:
-        svante combine Mb_H20.tsv Mb_D20.tsv mb_dielectric_relaxation.tsv
-    """
-    d2o = pd.read_csv(d2o_file, sep="\t", index_col=0)
-    d2o.rename(
-        columns={
-            "k_c, s^{-1}": "k_{D_2O}, s^{-1}",
-            "amplitude": "amplitude_{D_2O}",
-        },
-        inplace=True,
-    )
-    h2o = pd.read_csv(h2o_file, sep="\t", index_col=0)
-    h2o.rename(
-        columns={
-            "k_c, s^{-1}": "k_{H_2O}, s^{-1}",
-            "amplitude": "amplitude_{H_2O}",
-        },
-        inplace=True,
-    )
-    combined = pd.concat([h2o, d2o], axis=1)
-    combined["1000/T, K^{-1}"] = 1000.0 / combined.index
-    combined["k_{H_2O}/k_{D_2O}"] = (
-        combined["k_{H_2O}, s^{-1}"] / combined["k_{D_2O}, s^{-1}"]
-    )
-    n_overlaps = combined["k_{H_2O}/k_{D_2O}"].notna().sum()
-    print(
-        f"{len(combined)} data points from {combined.index.min()} "
-        + f"to {combined.index.max()} K, {n_overlaps} in common"
-    )
-    print(f"written to {output_file}")
+        df.rename(columns={rate_col_in:rate_col_out,
+                           uncertainty_col_in: uncertainty_col_out
+                           }, inplace=True)
+        df = df[[T_uncertainty_col, rate_col_out, uncertainty_col_out]]
+        logger.info(f'   {uri}: {n_points} points from {t_min} to {t_max} K')
+        if verbose:
+            print(rf'   {outputs[i]["title"]}')
+            print(df)
+        frames.append(df)
+    combined = pd.concat(frames, axis=1)
+    combined["±T"] = combined[delta_T_cols].max(axis=1)
+    combined = combined[output_cols]
+    output_file =conf['combined']['filename']
+    if verbose:
+        print(combined)
+    logger.info(f"{len(combined)} points written to {output_file}")
     combined.to_csv(output_file, sep="\t", float_format="%.4f")

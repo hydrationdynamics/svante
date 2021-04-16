@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# third-party imports
-import attr
+# standard-library imports
 import json
 from numbers import Number
 from pathlib import Path
-from pint import UnitRegistry
 from typing import Any
+
+# third-party imports
+import attr
+from pint import UnitRegistry
 from uncertainties import ufloat
 
 # global constants

@@ -42,6 +42,13 @@ scipy = "^1.6.2"
 pydove = "^0.3.3"
 attrs = "^20.3.0"
 toml = "^0.10.2"
+sciplotlib = "^0.0.6"
+Pint = "^0.17"
+uncertainties = "^3.1.5"
+shellingham = "^1.4.0"
+colorama = "^0.4.4"
+tabulate = "^0.8.9"
+loguru = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.3"
