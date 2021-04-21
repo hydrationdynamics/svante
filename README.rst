@@ -1,48 +1,71 @@
-Svante
-======
+=======================
+Svante: Arrhenius Plots
+=======================
+.. badges-begin
 
-|PyPI| |Python Version| |License|
-
-|Read the Docs| |Tests| |Codecov|
-
-|pre-commit| |Black|
+| |PyPi| |Python Version| |Repo| |Downloads| |Dlrate|
+| |License| |Tests| |Coverage| |Codacy| |Issues|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/svante.svg
    :target: https://pypi.org/project/svante/
-   :alt: PyPI
+   :alt: PyPI package
 .. |Python Version| image:: https://img.shields.io/pypi/pyversions/svante
    :target: https://pypi.org/project/svante
-   :alt: Python Version
-.. |License| image:: https://img.shields.io/pypi/l/svante
-   :target: https://opensource.org/licenses/MIT
-   :alt: License
+   :alt: Supported Python Versions
+.. |Repo| image:: https://img.shields.io/github/last-commit/hydrationdynamics/svante
+    :target: https://github.com/hydrationdynamics/svante
+    :alt: GitHub repository
+.. |Downloads| image:: https://pepy.tech/badge/svante
+     :target: https://pepy.tech/project/pytest_datadir_mgr
+     :alt: Download stats
+.. |Dlrate| image:: https://img.shields.io/pypi/dm/svante
+   :target: https://github.com/hydrationdynamics/svante
+   :alt: PYPI download rate
+.. |License| image:: https://img.shields.io/badge/License-BSD%203--Clause-blue.s
+vg
+    :target: https://github.com/hydrationdynamics/svante/blob/master/LICENSE.
+txt
+    :alt: License terms
+.. |Tests| image:: https://github.com/hydrationdynamics/svante/workflows/Tests/badge.svg
+   :target: https://github.com/hydrationdynamics/svante/actions?workflow=Tests
+   :alt: Tests
+.. |Coverage| image:: https://codecov.io/gh/hydrationdynamics/svante/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/hydrationdynamics/svante
+    :alt: Codecov.io test coverage
+.. |Codacy| image:: https://api.codacy.com/project/badge/Grade/d9c8687d3c544049a293b2faf8919c07
+    :target: https://www.codacy.com/gh/hydrationdynamics/svante?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hydrationdynamics/svante&amp;utm_campaign=Badge_Grade
+    :alt: Codacy.io grade
+.. |Issues| image:: https://img.shields.io/github/issues/hydrationdynamics/svante.svg
+    :target:  https://github.com/hydrationdynamics/svante/issues
+    :alt: Issues reported
 .. |Read the Docs| image:: https://img.shields.io/readthedocs/svante/latest.svg?label=Read%20the%20Docs
    :target: https://svante.readthedocs.io/
    :alt: Read the documentation at https://svante.readthedocs.io/
-.. |Tests| image:: https://github.com/joelb123/svante/workflows/Tests/badge.svg
-   :target: https://github.com/joelb123/svante/actions?workflow=Tests
-   :alt: Tests
-.. |Codecov| image:: https://codecov.io/gh/joelb123/svante/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/joelb123/svante
-   :alt: Codecov
-.. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
-   :target: https://github.com/pre-commit/pre-commit
-   :alt: pre-commit
-.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
-   :alt: Black
+.. badges-end
 
+.. image:: https://raw.githubusercontent.com/hydrationdynamics/svante/main/do
+cs/_static/logo.png
+   :target: https://raw.githubusercontent.com/hydrationdynamics/svante/main/LICENSE.artwork.txt
+   :alt: Fly Svante logo
+
+.. |Codecov| image:: https://codecov.io/gh/hydrationdynamics/svante/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/hydrationdynamics/svante
+   :alt: Codecov
 
 Features
 --------
 
-* TODO
+* Combines rate columns from multiple input TSV files
+* Handles uncertainties in rates and uncertainties
+* Creates Arrhenius plots
+* Fits activation enthalpies and prefactors to rates
+* Optionally, plots ratios of two rates
 
 
 Requirements
 ------------
 
-* TODO
+* Python 3.7 to 3.9 on Linux or Mac
 
 
 Installation
@@ -71,7 +94,7 @@ To learn more, see the `Contributor Guide`_.
 License
 -------
 
-Distributed under the terms of the `MIT license`_,
+Distributed under the terms of the `BSD 3-Clause license`_,
 *Svante* is free and open source software.
 
 
@@ -85,15 +108,8 @@ please `file an issue`_ along with a detailed description.
 Credits
 -------
 
-This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter`_ template.
+Svante was written by Joel Berendzen.
 
-.. _@cjolowicz: https://github.com/cjolowicz
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _MIT license: https://opensource.org/licenses/MIT
-.. _PyPI: https://pypi.org/
-.. _Hypermodern Python Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
-.. _file an issue: https://github.com/joelb123/svante/issues
-.. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst
 .. _Usage: https://svante.readthedocs.io/en/latest/usage.html

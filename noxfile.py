@@ -20,7 +20,7 @@ except ImportError:
 
 
 package = "svante"
-python_versions = ["3.9", "3.8", "3.7", "3.6"]
+python_versions = ["3.8"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
@@ -60,7 +60,9 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
         text = hook.read_text()
         bindir = repr(session.bin)[1:-1]  # strip quotes
         if not (
-            Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text
+            Path("A") == Path("a")
+            and bindir.lower() in text.lower()
+            or bindir in text
         ):
             continue
 
@@ -83,7 +85,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
         hook.write_text("\n".join(lines))
 
 
-@session(name="pre-commit", python="3.9")
+@session(name="pre-commit", python="3.8")
 def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or ["run", "--all-files", "--show-diff-on-failure"]
@@ -105,7 +107,7 @@ def precommit(session: Session) -> None:
         activate_virtualenv_in_precommit_hooks(session)
 
 
-@session(python="3.9")
+@session(python="3.8")
 def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
@@ -121,16 +123,25 @@ def mypy(session: Session) -> None:
     session.install("mypy", "pytest")
     session.run("mypy", *args)
     if not session.posargs:
-        session.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
+        session.run(
+            "mypy", f"--python-executable={sys.executable}", "noxfile.py"
+        )
 
 
 @session(python=python_versions)
 def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
-    session.install("coverage[toml]", "pytest", "pygments")
+    session.install("coverage[toml]",
+                    "pytest",
+                    "pytest-cov",
+                    "pygments",
+                    "sh",
+                    "pytest-datadir-mgr")
     try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+        session.run(
+            "coverage", "run", "--parallel", "-m", "pytest", *session.posargs
+        )
     finally:
         if session.interactive:
             session.notify("coverage")
@@ -188,7 +199,9 @@ def docs(session: Session) -> None:
     """Build and serve the documentation with live reloading on file changes."""
     args = session.posargs or ["--open-browser", "docs", "docs/_build"]
     session.install(".")
-    session.install("sphinx", "sphinx-autobuild", "sphinx-click", "sphinx-rtd-theme")
+    session.install(
+        "sphinx", "sphinx-autobuild", "sphinx-click", "sphinx-rtd-theme"
+    )
 
     build_dir = Path("docs", "_build")
     if build_dir.exists():

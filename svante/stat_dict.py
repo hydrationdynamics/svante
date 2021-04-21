@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-
 # standard-library imports
 import json
 from numbers import Number
 from pathlib import Path
 from typing import Any
 
-# third-party imports
 import attr
-from pint import UnitRegistry
-from uncertainties import ufloat
+from pint import UnitRegistry  # type: ignore
+from uncertainties import ufloat  # type: ignore
+# third-party imports
 
 # global constants
 UREG = UnitRegistry()
@@ -104,7 +103,7 @@ class StatDict(object):
             ret_str += f"{key}: {value}"
         return ret_str
 
-    def save(self):
+    def save(self) -> None:
         stringified = {}
         for key, value in self.stat_dict.items():
             stringified[key] = str(value)

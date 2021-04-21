@@ -29,6 +29,11 @@ logs/
 thumbs.db
 Thumbs.db
 
+# IDE files
+###########
+.idea/
+
 # generated data
 ################
 tests/data
+mb_dielectric_relaxation.tsv
