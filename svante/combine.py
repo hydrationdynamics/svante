@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
+"""Combine multiple TSV files containing rates into one file."""
 # standard library imports
 import sys
 from pathlib import Path
 
 import pandas as pd
 from loguru import logger
-from uncertainties import unumpy  # type: ignore
 
 from .common import APP
 from .common import read_toml_file
 from .common import STATE
 # third-party imports
-# module imports
+
 
 @APP.command()
 def combine(toml_file: Path) -> None:
@@ -24,7 +24,7 @@ def combine(toml_file: Path) -> None:
     )
     frames = []
     output_cols = ["±T"]
-    delta_T_cols = []
+    delta_t_cols = []
     for i, dataset in enumerate(inputs):
         uri = dataset["uri"]
         df = pd.read_csv(uri, sep="\t", index_col=dataset["T"]["col"])
@@ -35,7 +35,7 @@ def combine(toml_file: Path) -> None:
         uncertainty_col_out = "±" + rate_col_out
         output_cols += [rate_col_out, uncertainty_col_out]
         T_uncertainty_col = f"±T.{rate_col_out}"
-        delta_T_cols.APPend(T_uncertainty_col)
+        delta_t_cols.append(T_uncertainty_col)
         if "uncertainty" in dataset["T"]:
             df[T_uncertainty_col] = dataset["T"]["uncertainty"]
         elif "uncertainties" in dataset["T"]:
@@ -60,9 +60,9 @@ def combine(toml_file: Path) -> None:
         if STATE["verbose"]:
             print(rf'   {outputs[i]["title"]}')
             print(df)
-        frames.APPend(df)
+        frames.append(df)
     combined = pd.concat(frames, axis=1)
-    combined["±T"] = combined[delta_T_cols].max(axis=1)
+    combined["±T"] = combined[delta_t_cols].max(axis=1)
     combined = combined[output_cols]
     t_min = combined.index.min()
     t_max = combined.index.max()

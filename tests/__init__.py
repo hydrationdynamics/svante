@@ -7,10 +7,10 @@ import os
 import sys
 from pathlib import Path
 
+# third-party imports
 import pytest
 import sh
 from sh import ErrorReturnCode
-# third-party imports
 
 # global constants
 TOML_FILE = "mb_dielectric_relaxation.toml"

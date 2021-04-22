@@ -76,7 +76,6 @@ sphinx-click = "^2.7.1"
 Pygments = "^2.8.1"
 pytest-datadir-mgr = "^1.2.5"
 poetry-dynamic-versioning = "^0.12.4"
-pytest-cov = "^2.11.1"
 flynt = "^0.64"
 isort = "^5.8.0"
 pandas-stubs = "^1.1.0"
@@ -88,7 +87,7 @@ svante = "svante.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ['py37', 'py38', 'py39']
+target-version = ['py37', 'py38']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -106,7 +105,7 @@ exclude = '''
 '''
 
 [tool.coverage.paths]
-source = ["svante"]
+source = ["svante", "*/site-packages"]
 omit = [
     "tests/*",
     "noxfile.py",

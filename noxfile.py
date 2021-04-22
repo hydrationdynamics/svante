@@ -20,7 +20,7 @@ except ImportError:
 
 
 package = "svante"
-python_versions = ["3.8"]
+python_versions = ["3.9", "3.8", "3.7"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
@@ -107,7 +107,7 @@ def precommit(session: Session) -> None:
         activate_virtualenv_in_precommit_hooks(session)
 
 
-@session(python="3.8")
+@session(python=python_versions)
 def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
@@ -118,7 +118,7 @@ def safety(session: Session) -> None:
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["src", "tests", "docs/conf.py"]
+    args = session.posargs or ["svante", "tests", "docs/conf.py"]
     session.install(".")
     session.install("mypy", "pytest")
     session.run("mypy", *args)
@@ -133,14 +133,13 @@ def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
     session.install("coverage[toml]",
-                    "pytest",
-                    "pytest-cov",
                     "pygments",
-                    "sh",
-                    "pytest-datadir-mgr")
+                    "pytest",
+                    "pytest-datadir-mgr",
+                    "sh")
     try:
         session.run(
-            "coverage", "run", "--parallel", "-m", "pytest", *session.posargs
+            "coverage", "run", "-m", "pytest", *session.posargs
         )
     finally:
         if session.interactive:
@@ -162,12 +161,12 @@ def coverage(session: Session) -> None:
 
     session.run("coverage", *args)
 
-
 @session(python=python_versions)
 def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
-    session.install("pytest", "typeguard", "pygments")
+    session.install("pytest", "typeguard", "pygments",
+                    "pytest-datadir-mgr", "sh")
     session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 

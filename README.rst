@@ -21,10 +21,8 @@ Svante: Arrhenius Plots
 .. |Dlrate| image:: https://img.shields.io/pypi/dm/svante
    :target: https://github.com/hydrationdynamics/svante
    :alt: PYPI download rate
-.. |License| image:: https://img.shields.io/badge/License-BSD%203--Clause-blue.s
-vg
-    :target: https://github.com/hydrationdynamics/svante/blob/master/LICENSE.
-txt
+.. |License| image:: https://img.shields.io/badge/License-BSD%203--Clause-blue.svg
+    :target: https://github.com/hydrationdynamics/svante/blob/master/LICENSE.txt
     :alt: License terms
 .. |Tests| image:: https://github.com/hydrationdynamics/svante/workflows/Tests/badge.svg
    :target: https://github.com/hydrationdynamics/svante/actions?workflow=Tests
@@ -43,8 +41,7 @@ txt
    :alt: Read the documentation at https://svante.readthedocs.io/
 .. badges-end
 
-.. image:: https://raw.githubusercontent.com/hydrationdynamics/svante/main/do
-cs/_static/logo.png
+.. image:: https://raw.githubusercontent.com/hydrationdynamics/svante/main/docs/_static/logo.png
    :target: https://raw.githubusercontent.com/hydrationdynamics/svante/main/LICENSE.artwork.txt
    :alt: Fly Svante logo
 
@@ -55,9 +52,9 @@ cs/_static/logo.png
 Features
 --------
 
-* Combines rate columns from multiple input TSV files
-* Handles uncertainties in rates and uncertainties
-* Creates Arrhenius plots
+* Combines rates from multiple input `TSV files`_ using `pandas`_
+* Handles `uncertainties`_ in rates and temperatures
+* Creates `Arrhenius plots`_ using `Matplotlib`_
 * Fits activation enthalpies and prefactors to rates
 * Optionally, plots ratios of two rates
 
@@ -65,7 +62,7 @@ Features
 Requirements
 ------------
 
-* Python 3.7 to 3.9 on Linux or Mac
+* Tested on Python 3.7 to 3.9 on Linux and Mac
 
 
 Installation
@@ -110,6 +107,16 @@ Credits
 
 Svante was written by Joel Berendzen.
 
+
+.. _TSV files: https://en.wikipedia.org/wiki/Tab-separated_values
+.. _pandas: https://pandas.pydata.org/
+.. _uncertainties: https://uncertainties-python-package.readthedocs.io/en/latest/user_guide.html
+.. _Arrhenius plots: https://en.wikipedia.org/wiki/Arrhenius_plot
+.. _Matplotlib: https://matplotlib.org/
+.. _BSD 3-Clause license: https://opensource.org/licenses/BSD-3-Clause
+.. _PyPI: https://pypi.org/
+.. _file an issue: https://github.com/joelb123/svante/issues
+.. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst
 .. _Usage: https://svante.readthedocs.io/en/latest/usage.html

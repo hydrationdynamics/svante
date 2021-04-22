@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Make Arrhenius plot with fits."""
 # standard library imports
-import sys
 from contextlib import nullcontext
 from math import sqrt
 from pathlib import Path
@@ -43,11 +43,11 @@ INVERSE_T_COL = "1000/T, K^{-1}"
 H2O_RATE_COL = "k_{H_2O}, s^{-1}"
 D2O_RATE_COL = "k_{D_2O}, s^{-1}"
 COLORS = {"H2O": "blue", "D2O": "orange", "KIE": "green"}
+NATURE_OPTION = typer.Option(False, help="Use Nature style"),
 
-
-def inverse_kilokelvin_to_c(kK: float) -> float:
+def inverse_kilokelvin_to_c(inverse_kilo_kelvins: float) -> float:
     """Convert inverse kiloKelvin to degrees Celsius."""
-    return (1000.0 / (kK + EPSILON)) - ZERO_C
+    return (1000.0 / (inverse_kilo_kelvins + EPSILON)) - ZERO_C
 
 
 def c_to_inverse_kilokelvin(c: float) -> float:
@@ -58,7 +58,7 @@ def c_to_inverse_kilokelvin(c: float) -> float:
 @APP.command()
 def plot(
     toml_file: Path,
-    nature: bool = typer.Option(False, help="Use Nature style"),
+    nature: bool = NATURE_OPTION,
 ) -> None:
     """Arrhenius plot with fits."""
     conf = read_toml_file(toml_file, "configuration file", "plot")
@@ -69,17 +69,17 @@ def plot(
         denom = ratio["denominator"]
         ratio_name = ratio["name"]
         uratio_name = "+" + ratio_name
-        T_uncert_ratio_col = f"±T.{ratio_name}"
-        T_uncert_num_col = f"±T.{num}"
-        T_uncert_denom_col = f"±T.{denom}"
+        t_uncert_ratio_col = f"±T.{ratio_name}"
+        t_uncert_num_col = f"±T.{num}"
+        t_uncert_denom_col = f"±T.{denom}"
         unum = unumpy.uarray(df[num], df["±" + num])
         udenom = unumpy.uarray(df[denom], df["±" + denom])
         uratio = unum / udenom
         print(f"uratio={uratio}")
         df[ratio_name] = unumpy.to_nominal_values(uratio)
         df[uratio_name] = unumpy.to_std_devs(uratio)
-        df[T_uncert_ratio_col] = df[
-            [T_uncert_num_col, T_uncert_denom_col]
+        df[t_uncert_ratio_col] = df[
+            [t_uncert_num_col, t_uncert_denom_col]
         ].std(axis=1)
     GLOBAL_STATS["KIE_ratio_min"] = df[RATIO_COL].min()
     GLOBAL_STATS["KIE_ratio_max"] = df[RATIO_COL].max()
@@ -105,8 +105,8 @@ def plot(
             ),
         }
         handles, labels = ax.get_legend_handles_labels()
-        delta_H = {}
-        delta_H_std = {}
+        delta_h = {}
+        delta_h_std = {}
         log_preexp = {}
         log_preexp_std = {}
         log_preexp_string = {}
@@ -114,18 +114,18 @@ def plot(
         for i in ("H2O", "D2O"):
             log_preexp[i] = res[i].params[0]
             log_preexp_std[i] = res[i].bse[0]
-            delta_H[i] = -1.0 * res[i].params[1] * R * 1000.0 * LOG10_TO_E
-            delta_H_std[i] = res[i].bse[1] * R * 1000.0 * LOG10_TO_E
+            delta_h[i] = -1.0 * res[i].params[1] * R * 1000.0 * LOG10_TO_E
+            delta_h_std[i] = res[i].bse[1] * R * 1000.0 * LOG10_TO_E
             if STATE['verbose']:
                 print(res[i].summary())
             labelidx = labels.index(i)
             labels[labelidx] = (
                 rf"$\rm {i[0]}_2O$"
-                #    + rf":\rm \Delta H={delta_H[i]:.0f}$ kJ/mol, "
+                #    + rf":\rm \Delta H={delta_h[i]:.0f}$ kJ/mol, "
                 #    + rf"$\log A={log_preexp[i]:.0f}$ "
             )
-            GLOBAL_STATS[f"ΔH_{i}"] = delta_H[i]  #:.0f}
-            # GLOBAL_STATS P{delta_H_std[i]:.0f} kJ/mol"
+            GLOBAL_STATS[f"ΔH_{i}"] = delta_h[i]  #:.0f}
+            # GLOBAL_STATS P{delta_h_std[i]:.0f} kJ/mol"
             log_preexp_string[
                 i
             ] = f"log A({i}): {log_preexp[i]:0.0f}±{log_preexp_std[i]:0.0f}/s"
@@ -155,7 +155,7 @@ def plot(
             )
         ax2.set_ylabel("KIE Ratio")
         handles += ratio_handle
-        labels.APPend("Ratio")
+        labels.append("Ratio")
         ax.legend(handles, labels)
         ax.set_xlabel(r"$1000/T$, K")
         ax.set_ylabel(r"$\log k_c, s^{-1} $")
