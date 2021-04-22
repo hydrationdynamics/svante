@@ -25,6 +25,7 @@ VERSION = __version__
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
 
 class StateDict(TypedDict):
+
     """Dictionary of global state variables."""
     verbose: bool
     log_level: str

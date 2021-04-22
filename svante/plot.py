@@ -89,7 +89,7 @@ def plot(
     else:
         stylecontext = nullcontext()
     with stylecontext:
-        fig, ax = plt.subplots()
+        unused_fig, ax = plt.subplots()
         res = {
             "H2O": dv.regplot(
                 df[INVERSE_T_COL],

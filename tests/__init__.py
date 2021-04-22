@@ -13,8 +13,8 @@ import sh
 from sh import ErrorReturnCode
 
 # global constants
-TOML_FILE = "mb_dielectric_relaxation.toml"
-COMBINE_OUTPUTS = ["mb_dielectric_relaxation.tsv"]
+TOML_FILE = "dielectric_relaxation.toml"
+COMBINE_OUTPUTS = ["dielectric_relaxation.tsv"]
 PLOT_OUTPUTS = []
 
 

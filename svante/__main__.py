@@ -47,7 +47,6 @@ def main(
     ),
 ) -> None:
     """Run the APP and do global-state actions."""
-    pass
     if verbose:
         STATE["verbose"] = True
         STATE["log_level"] = "DEBUG"

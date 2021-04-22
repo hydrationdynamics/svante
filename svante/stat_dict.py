@@ -15,9 +15,11 @@ UREG = UnitRegistry()
 
 
 class StatDict(object):
+
     """Holds a class of Stat objects that can be serialized to JSON."""
 
     class Stat(object):
+
         """Float with optional uncertainty, significant digits, units, and description."""
 
         def __init__(
