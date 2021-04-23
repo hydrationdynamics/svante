@@ -36,4 +36,8 @@ Thumbs.db
 # generated data
 ################
 tests/data
-mb_dielectric_relaxation.tsv
+dielectric_relaxation.tsv
+
+# temporary working dir
+#######################
+tmp/

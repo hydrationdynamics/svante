@@ -16,15 +16,32 @@ filename = "dielectric_relaxation.tsv"
 
 [[combined.rates]]
 name = "k_H2O"
-title = "\\rm Fake in H_2O"
+label = "Fake in H$_2$O"
+# line labels locations in units of 1000/T and log rate
+# with the point on the left edge
+line_label_loc = [4.6, 4.5]
 
 [[combined.rates]]
 name = "k_D2O"
-title = "\\rm Fake in D_2O"
+label = "Fake in D$_2$O"
+line_label_loc = [3.9, 7.15]
 
 [plot]
 secondary_axis_units = "C"
+y_label = "peak $k_{\\beta}$"
 add_fit_values = true
+
+[plot.savefig]
+# See https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html
+# for an explanation of these parameters used to save the figure.
+filename = "arrhenius_plot"
+# some possible format values are png, pdf, svg, and eps
+format = "png"
+dpi = 200
+facecolor = "w"
+edgecolor = "w"
+transparent = false
+pad_inches = 0.1
 
 [[plot.ratios]]
 numerator = 'k_H2O'

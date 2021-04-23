@@ -14,9 +14,8 @@ from sh import ErrorReturnCode
 
 # global constants
 TOML_FILE = "dielectric_relaxation.toml"
+COMBINE_INPUTS = [TOML_FILE, "fake_d2o.tsv", "fake_h2o.tsv"]
 COMBINE_OUTPUTS = ["dielectric_relaxation.tsv"]
-PLOT_OUTPUTS = []
-
 
 @contextlib.contextmanager
 def working_directory(path):

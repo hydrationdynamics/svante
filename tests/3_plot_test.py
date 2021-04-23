@@ -12,12 +12,12 @@ import sh
 from . import COMBINE_OUTPUTS
 from . import help_check
 from . import print_docstring
-from . import COMBINE_INPUTS
 from . import TOML_FILE
 
 # global constants
 svante = sh.Command("svante")
-SUBCOMMAND = "combine"
+SUBCOMMAND = "plot"
+OUTPUTS = ["arrhenius_plot.png"]
 
 
 def test_subcommand_help():
@@ -29,7 +29,7 @@ def test_subcommand_help():
 def test_combine(datadir_mgr):
     """Test combining rate data."""
     with datadir_mgr.in_tmp_dir(
-        inpathlist=COMBINE_INPUTS,
+        inpathlist=COMBINE_OUTPUTS + [TOML_FILE],
         save_outputs=True,
         outscope="global",
         excludepaths=["logs/"],
@@ -42,6 +42,6 @@ def test_combine(datadir_mgr):
             )
         except sh.ErrorReturnCode as errors:
             print(errors)
-            pytest.fail("combine failed")
-        for filestring in COMBINE_OUTPUTS:
+            pytest.fail(f' {SUBCOMMAND} failed')
+        for filestring in OUTPUTS:
             assert Path(filestring).exists()
