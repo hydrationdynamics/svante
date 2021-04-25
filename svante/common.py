@@ -16,6 +16,7 @@ from schema import Use  # type: ignore
 
 from . import __doc__ as docstring
 from .stat_dict import StatDict
+
 # third-party imports
 # module imports
 
@@ -24,9 +25,11 @@ __version__ = "0.0.0"
 VERSION = __version__
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
 
+
 class StateDict(TypedDict):
 
     """Dictionary of global state variables."""
+
     verbose: bool
     log_level: str
 
@@ -49,10 +52,15 @@ COMBINED_SCHEMA = Schema(
     {
         "title": And(str, len),
         "filename": And(str, len),
-        "rates": [Schema({"name": And(str, len),
-                          "label": And(str, len),
-                          "line_label_loc": [float]
-                          })]
+        "rates": [
+            Schema(
+                {
+                    "name": And(str, len),
+                    "label": And(str, len),
+                    "line_label_loc": [float],
+                }
+            )
+        ],
     }
 )
 PLOT_SCHEMA = Schema(
@@ -60,14 +68,17 @@ PLOT_SCHEMA = Schema(
         "secondary_axis_units": And(str, len),
         "y_label": And(str, len),
         "add_fit_values": bool,
-        "savefig": Schema({
-            "filename": And(str, len),
-            "format": And(str, len),
-            "dpi": int,
-            "facecolor": And(str, len),
-            "edgecolor": And(str, len),
-            "transparent": bool,
-            "pad_inches": float}),
+        "savefig": Schema(
+            {
+                "filename": And(str, len),
+                "format": And(str, len),
+                "dpi": int,
+                "facecolor": And(str, len),
+                "edgecolor": And(str, len),
+                "transparent": bool,
+                "pad_inches": float,
+            }
+        ),
         "ratios": [
             Schema(
                 {

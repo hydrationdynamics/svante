@@ -15,12 +15,14 @@ from .common import APP
 from .common import STATE
 from .common import VERSION
 from .plot import plot
+
 # third-party imports
 # module imports
 
 # global constants
 NO_LEVEL_BELOW = 30  # Don't print level for messages below this level
 unused_cli_funcs = (combine, plot)
+
 
 def stderr_format_func(record: loguru.Record) -> str:
     """Do level-sensitive formatting."""
