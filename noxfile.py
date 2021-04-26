@@ -1,4 +1,5 @@
 """Nox sessions."""
+import random
 import shutil
 import sys
 from pathlib import Path
@@ -141,6 +142,10 @@ def tests(session: Session) -> None:
         "sh",
     )
     session.run("pytest", "--cov=svante", *session.posargs)
+    cov_path = Path(".coverage")
+    if cov_path.exists():
+        cov_path.rename(f".coverage.{random.randrange(100000)}")
+
 
 @session
 def coverage(session: Session) -> None:
@@ -149,10 +154,9 @@ def coverage(session: Session) -> None:
     nsessions = len(session._runner.manifest)  # type: ignore[attr-defined]
     has_args = session.posargs and nsessions == 1
     args = session.posargs if has_args else ["report"]
-    session.install("coverage[toml]", "pytest-cov")
+    session.install("coverage[toml]")
     if not has_args and any(Path().glob(".coverage.*")):
         session.run("coverage", "combine")
-
     session.run("coverage", *args)
 
 @session(python=python_versions)
