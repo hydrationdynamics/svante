@@ -142,7 +142,18 @@ def tests(session: Session) -> None:
     )
     session.run("pytest", "--cov=svante", *session.posargs)
 
+@session
+def coverage(session: Session) -> None:
+    """Produce the coverage report."""
+    # Do not use session.posargs unless this is the only session.
+    nsessions = len(session._runner.manifest)  # type: ignore[attr-defined]
+    has_args = session.posargs and nsessions == 1
+    args = session.posargs if has_args else ["report"]
+    session.install("coverage[toml]", "pytest-cov")
+    if not has_args and any(Path().glob(".coverage.*")):
+        session.run("coverage", "combine")
 
+    session.run("coverage", *args)
 
 @session(python=python_versions)
 def typeguard(session: Session) -> None:
