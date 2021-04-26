@@ -109,6 +109,7 @@ source = ["svante", "*site-packages/svante"]
 
 [tool.coverage.report]
 show_missing = true
+ignore_errors = true
 exclude_lines = [
     "if self.debug:",
     "pragma: no cover",
