@@ -54,7 +54,7 @@ def main(
         STATE["log_level"] = "DEBUG"
     elif quiet:
         STATE["log_level"] = "ERROR"
-    f"{version}"
+    unused_state_str = f"{version}"
 
 
 logger.remove()

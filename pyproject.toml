@@ -41,7 +41,6 @@ numpy = "^1.20.2"
 scipy = "^1.6.2"
 pydove = "^0.3.3"
 attrs = "^20.3.0"
-sciplotlib = "^0.0.6"
 Pint = "^0.17"
 uncertainties = "^3.1.5"
 shellingham = "^1.4.0"
@@ -62,7 +61,6 @@ sphinx = "^3.5.4"
 sphinx-autobuild = "^2021.3.14"
 pre-commit = "^2.12.0"
 flake8 = "^3.9.0"
-#black = "^20.8b1"
 flake8-bandit = "^2.1.2"
 flake8-bugbear = "^21.4.3"
 flake8-docstrings = "^1.6.0"
@@ -81,6 +79,8 @@ isort = "^5.8.0"
 pandas-stubs = "^1.1.0"
 sh = "^1.14.1"
 nox-poetry = "^0.8.4"
+pytest-cov = "^2.11.1"
+black = "^21.4b0"
 
 [tool.poetry.scripts]
 svante = "svante.__main__:main"
@@ -105,26 +105,17 @@ exclude = '''
 '''
 
 [tool.coverage.paths]
-source = ["svante", "*/site-packages"]
-omit = [
-    "tests/*",
-    "noxfile.py",
-    ".nox/*"
-]
-
-[tool.coverage.run]
-branch = true
-source = ["svante"]
+source = ["svante", "*site-packages/svante"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 90
 exclude_lines = [
     "if self.debug:",
     "pragma: no cover",
     "raise NotImplementedError",
     "if __name__ == .__main__.:"
     ]
+
 [tool.isort]
 atomic = true
 force_single_line = true

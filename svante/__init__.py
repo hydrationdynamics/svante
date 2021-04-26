@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Svante -- configurable Arrhenius plots and fits.
+"""Svante -- configurable Arrhenius plots and fits.
 
 \b
 For complete help visit https://github.com/hydrationdynamics/svante

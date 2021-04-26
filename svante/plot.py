@@ -4,22 +4,21 @@
 from contextlib import nullcontext
 from pathlib import Path
 
-# module imports
 import matplotlib.pyplot as plt  # type: ignore
 import numpy as np
 import pandas as pd
 import pydove as dv  # type: ignore
 import typer
 from loguru import logger
-from sciplotlib import style as spstyle  # type: ignore
 from scipy.constants import gas_constant  # type: ignore
-#from uncertainties import unumpy  # type: ignore
 
-# module imports
 from .common import APP
 from .common import GLOBAL_STATS
 from .common import read_toml_file
 from .common import STATE
+# module imports
+# from uncertainties import unumpy  # type: ignore
+# module imports
 
 
 # global constants
@@ -28,7 +27,7 @@ ZERO_C = 273.15  # in K
 R = gas_constant / 1000.0  # kJ/mol⋅K
 LOG10_TO_E = 2.303
 INVERSE_T_COL = "1000/T"
-NATURE_OPTION = typer.Option(False, help="Use Nature style.")
+NATURE = False
 SHOW_OPTION = typer.Option(False, help="Show plot.")
 
 
@@ -45,7 +44,6 @@ def c_to_inverse_kilokelvin(c: float) -> float:
 @APP.command()
 def plot(
     toml_file: Path,
-    nature: bool = NATURE_OPTION,
     show: bool = SHOW_OPTION,
 ) -> None:
     """Arrhenius plot with fits."""
@@ -56,7 +54,7 @@ def plot(
     df[INVERSE_T_COL] = 1000.0 / df.index
 
     # make fits and plots
-    if nature:
+    if NATURE:
         stylecontext = plt.style.context(spstyle.get_style("nature"))
     else:
         stylecontext = nullcontext()
@@ -140,7 +138,7 @@ def plot(
         sv_params = plot_params["savefig"]
         fig_format = sv_params["format"]
         fname = f'{sv_params["filename"]}.{fig_format}'
-        logger.info(f'saving figure to "{fname}"')
+        logger.info(f'saving {fig_format} figure to "{fname}"')
         plt.savefig(
             fname,
             dpi=sv_params["dpi"],

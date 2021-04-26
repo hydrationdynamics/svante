@@ -4,15 +4,15 @@
 import sys
 from pathlib import Path
 
-# third-party imports
 import pytest
 import sh
 
-# module imports
 from . import COMBINE_OUTPUTS
 from . import help_check
 from . import print_docstring
 from . import TOML_FILE
+# third-party imports
+# module imports
 
 # global constants
 svante = sh.Command("svante")
@@ -42,6 +42,6 @@ def test_combine(datadir_mgr):
             )
         except sh.ErrorReturnCode as errors:
             print(errors)
-            pytest.fail(f' {SUBCOMMAND} failed')
+            pytest.fail(f" {SUBCOMMAND} failed")
         for filestring in OUTPUTS:
             assert Path(filestring).exists()

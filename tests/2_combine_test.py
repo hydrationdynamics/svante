@@ -4,16 +4,16 @@
 import sys
 from pathlib import Path
 
-# third-party imports
 import pytest
 import sh
 
-# module imports
+from . import COMBINE_INPUTS
 from . import COMBINE_OUTPUTS
 from . import help_check
 from . import print_docstring
-from . import COMBINE_INPUTS
 from . import TOML_FILE
+# third-party imports
+# module imports
 
 # global constants
 svante = sh.Command("svante")

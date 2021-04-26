@@ -6,19 +6,21 @@ import functools
 import os
 import sys
 from pathlib import Path
+from typing import Callable
 
-# third-party imports
 import pytest
 import sh
 from sh import ErrorReturnCode
+# third-party imports
 
 # global constants
 TOML_FILE = "dielectric_relaxation.toml"
 COMBINE_INPUTS = [TOML_FILE, "fake_d2o.tsv", "fake_h2o.tsv"]
 COMBINE_OUTPUTS = ["dielectric_relaxation.tsv"]
 
+
 @contextlib.contextmanager
-def working_directory(path):
+def working_directory(path: str) -> None:
     """Change working directory in context."""
     prev_cwd = Path.cwd()
     os.chdir(path)
@@ -28,7 +30,7 @@ def working_directory(path):
         os.chdir(prev_cwd)
 
 
-def help_check(subcommand):
+def help_check(subcommand: str) -> None:
     """Test help function for subcommand."""
     print(f"Test {subcommand} help.")
     if subcommand == "global":
@@ -45,10 +47,10 @@ def help_check(subcommand):
     assert "Options:" in output
 
 
-def print_docstring():
+def print_docstring() -> Callable:
     """Decorator to print a docstring."""
 
-    def decorator(func):
+    def decorator(func: Callable) -> Callable:
         """Define decorator"""
 
         @functools.wraps(func)

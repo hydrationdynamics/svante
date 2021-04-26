@@ -33,8 +33,7 @@ nox.options.sessions = (
 
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
-    """
-    Activate virtualenv in hooks installed by pre-commit.
+    """Activate virtualenv in hooks installed by pre-commit.
 
     This function patches git hooks installed by pre-commit to activate the
     session's virtual environment. This allows pre-commit to locate hooks in
@@ -133,41 +132,25 @@ def mypy(session: Session) -> None:
 def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
-    session.install("coverage[toml]",
-                    "pygments",
-                    "pytest",
-                    "pytest-datadir-mgr",
-                    "sh")
-    try:
-        session.run(
-            "coverage", "run", "-m", "pytest", *session.posargs
-        )
-    finally:
-        if session.interactive:
-            session.notify("coverage")
+    session.install(
+        "coverage[toml]",
+        "pygments",
+        "pytest",
+        "pytest-cov",
+        "pytest-datadir-mgr",
+        "sh",
+    )
+    session.run("pytest", "--cov=svante", *session.posargs)
 
 
-@session
-def coverage(session: Session) -> None:
-    """Produce the coverage report."""
-    # Do not use session.posargs unless this is the only session.
-    nsessions = len(session._runner.manifest)  # type: ignore[attr-defined]
-    has_args = session.posargs and nsessions == 1
-    args = session.posargs if has_args else ["report"]
-
-    session.install("coverage[toml]")
-
-    if not has_args and any(Path().glob(".coverage.*")):
-        session.run("coverage", "combine")
-
-    session.run("coverage", *args)
 
 @session(python=python_versions)
 def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
-    session.install("pytest", "typeguard", "pygments",
-                    "pytest-datadir-mgr", "sh")
+    session.install(
+        "pytest", "typeguard", "pygments", "pytest-datadir-mgr", "sh"
+    )
     session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 
