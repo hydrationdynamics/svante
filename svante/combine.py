@@ -59,7 +59,7 @@ def combine(toml_file: Path) -> None:
         df = df[[T_uncertainty_col, rate_col_out, uncertainty_col_out]]
         logger.info(f"   {uri}: {n_points} points from {t_min} to {t_max} K")
         if STATE["verbose"]:
-            print(rf'   {outputs[i]["title"]}')
+            print(rf'   {outputs[i]["label"]}')
             print(df)
         frames.append(df)
     combined = pd.concat(frames, axis=1)

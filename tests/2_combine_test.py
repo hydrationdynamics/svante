@@ -34,7 +34,7 @@ def test_combine(datadir_mgr):
         outscope="global",
         excludepaths=["logs/"],
     ):
-        args = [SUBCOMMAND, TOML_FILE]
+        args = ["--verbose", SUBCOMMAND, TOML_FILE]
         try:
             svante(
                 args,

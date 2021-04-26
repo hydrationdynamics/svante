@@ -20,12 +20,7 @@ from schema import Use  # type: ignore
 from . import __doc__ as docstring
 from .stat_dict import StatDict
 
-# third-party imports
-# module imports
-
 # global constants
-__version__ = "0.0.0"
-VERSION = __version__
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
 
 

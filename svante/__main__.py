@@ -10,10 +10,10 @@ import loguru
 import typer
 from loguru import logger
 
+from . import __version__
 from .combine import combine
 from .common import APP
 from .common import STATE
-from .common import VERSION
 from .plot import plot
 
 # third-party imports
@@ -33,7 +33,7 @@ def stderr_format_func(record: loguru.Record) -> str:
 
 def version_callback(value: bool) -> None:
     if value:
-        typer.echo(f"{APP.info.name} version {VERSION}")
+        typer.echo(f"{APP.info.name} version {__version__}")
         raise typer.Exit()
 
 
