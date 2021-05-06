@@ -27,7 +27,7 @@ Svante: Arrhenius Plots
 .. |Tests| image:: https://github.com/hydrationdynamics/svante/workflows/Tests/badge.svg
    :target: https://github.com/hydrationdynamics/svante/actions?workflow=Tests
    :alt: Tests
-.. |Coverage| image:: https://codecov.io/gh/hydrationdynamics/svante/branch/master/graph/badge.svg
+.. |Coverage| image:: https://codecov.io/gh/hydrationdynamics/svante/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/hydrationdynamics/svante
     :alt: Codecov.io test coverage
 .. |Codacy| image:: https://api.codacy.com/project/badge/Grade/d9c8687d3c544049a293b2faf8919c07
