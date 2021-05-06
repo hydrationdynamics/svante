@@ -7,7 +7,6 @@ import sh
 from . import help_check
 from . import print_docstring
 from . import working_directory
-# module imports
 
 # global constants
 svante = sh.Command("svante")

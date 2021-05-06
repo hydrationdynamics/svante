@@ -98,6 +98,7 @@ def precommit(session: Session) -> None:
         "flake8-bugbear",
         "flake8-docstrings",
         "flake8-rst-docstrings",
+        "pandas-stubs",
         "pep8-naming",
         "pre-commit",
         "pre-commit-hooks",
@@ -121,7 +122,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["svante"]
     session.install(".")
-    session.install("mypy", "pytest")
+    session.install("mypy", "pandas-stubs", "pytest")
     session.run("mypy", *args)
     if not session.posargs:
         session.run(
@@ -135,6 +136,7 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install(
         "coverage[toml]",
+        "pandas-stubs",
         "pygments",
         "pytest",
         "pytest-cov",
@@ -165,7 +167,12 @@ def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
     session.install(
-        "pytest", "typeguard", "pygments", "pytest-datadir-mgr", "sh"
+        "pandas-stubs",
+        "pytest",
+        "typeguard",
+        "pygments",
+        "pytest-datadir-mgr",
+        "sh",
     )
     session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
