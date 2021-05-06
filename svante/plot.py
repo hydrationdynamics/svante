@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Make Arrhenius plot with fits."""
 # standard library imports
-from contextlib import nullcontext
 from pathlib import Path
 
 import matplotlib.pyplot as plt  # type: ignore
@@ -13,12 +12,12 @@ from loguru import logger
 from scipy.constants import gas_constant  # type: ignore
 
 from .common import APP
-from .common import GLOBAL_STATS
 from .common import read_toml_file
 from .common import STATE
-# module imports
+from .common import STATS
+from .stat_dict import Stat
+
 # from uncertainties import unumpy  # type: ignore
-# module imports
 
 
 # global constants
@@ -27,8 +26,8 @@ ZERO_C = 273.15  # in K
 R = gas_constant / 1000.0  # kJ/mol⋅K
 LOG10_TO_E = 2.303
 INVERSE_T_COL = "1000/T"
-NATURE = False
 SHOW_OPTION = typer.Option(False, help="Show plot.")
+PLOT_STYLE = "default"
 
 
 def inverse_kilokelvin_to_c(inverse_kilo_kelvins: float) -> float:
@@ -42,6 +41,7 @@ def c_to_inverse_kilokelvin(c: float) -> float:
 
 
 @APP.command()
+@STATS.auto_save_and_report
 def plot(
     toml_file: Path,
     show: bool = SHOW_OPTION,
@@ -54,11 +54,7 @@ def plot(
     df[INVERSE_T_COL] = 1000.0 / df.index
 
     # make fits and plots
-    if NATURE:
-        stylecontext = plt.style.context(spstyle.get_style("nature"))
-    else:
-        stylecontext = nullcontext()
-    with stylecontext:
+    with plt.style.context(PLOT_STYLE):
         unused_fig, ax = plt.subplots()
         res = {}
         for rate_col_params in combined["rates"]:
@@ -82,13 +78,21 @@ def plot(
         # Now calculate parameters from the fits
         for rate_col in combined["rates"]:
             col = rate_col["name"]
-            log_preexp = res[col].params[0]
-            log_preexp_std = res[col].bse[0]
-            delta_h = res[col].params[1] * R * -1000.0 * LOG10_TO_E
-            delta_h_std = res[col].bse[1] * R * 1000.0 * LOG10_TO_E
-            logger.info(
-                f"{col}: ΔH={delta_h:.0f}±{delta_h_std:.0f} kJ/mol, "
-                + f" log A = {log_preexp:.0f}±{log_preexp_std:.0f}/s"
+            log_preexp = float(res[col].params[0])
+            log_preexp_std = float(res[col].bse[0])
+            delta_h = float(res[col].params[1] * R * -1000.0 * LOG10_TO_E)
+            delta_h_std = float(res[col].bse[1] * R * 1000.0 * LOG10_TO_E)
+            STATS[f"ΔH({col})"] = Stat(
+                delta_h,
+                uncert=delta_h_std,
+                units="kJ/mol",
+                desc="activation enthalpy",
+            )
+            STATS[f"log A({col})"] = Stat(
+                log_preexp,
+                uncert=log_preexp_std,
+                units="1/s",
+                desc="Pre-exponential",
             )
             if STATE["verbose"]:
                 print(res[col].summary())
@@ -129,8 +133,8 @@ def plot(
                 # df[t_uncert_ratio_col] = df[
                 #    [t_uncert_num_col, t_uncert_denom_col]
                 # ].std(axis=1)
-            # GLOBAL_STATS["KIE_ratio_min"] = df[RATIO_COL].min()
-            # GLOBAL_STATS["KIE_ratio_max"] = df[RATIO_COL].max()
+            # STATS["KIE_ratio_min"] = df[RATIO_COL].min()
+            # STATS["KIE_ratio_max"] = df[RATIO_COL].max()
             ax2.set_ylabel("KIE Ratio")
             handles += ratio_handle
             labels.append("Ratio")
@@ -138,7 +142,7 @@ def plot(
         sv_params = plot_params["savefig"]
         fig_format = sv_params["format"]
         fname = f'{sv_params["filename"]}.{fig_format}'
-        logger.info(f'saving {fig_format} figure to "{fname}"')
+        logger.debug(f'saving {fig_format} figure to "{fname}"')
         plt.savefig(
             fname,
             dpi=sv_params["dpi"],
@@ -150,4 +154,3 @@ def plot(
         )
         if show:
             plt.show()
-        print(GLOBAL_STATS)

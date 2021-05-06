@@ -41,3 +41,7 @@ dielectric_relaxation.tsv
 # temporary working dir
 #######################
 tmp/
+
+# stats file
+############
+*_stats.json

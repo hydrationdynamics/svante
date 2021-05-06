@@ -4,19 +4,20 @@
 import contextlib
 import functools
 import os
-import sys
 from pathlib import Path
 from typing import Callable
 
 import pytest
 import sh
 from sh import ErrorReturnCode
+
 # third-party imports
 
 # global constants
 TOML_FILE = "dielectric_relaxation.toml"
 COMBINE_INPUTS = [TOML_FILE, "fake_d2o.tsv", "fake_h2o.tsv"]
 COMBINE_OUTPUTS = ["dielectric_relaxation.tsv"]
+STATS_FILE = "svante_stats.json"
 
 
 @contextlib.contextmanager
@@ -51,11 +52,11 @@ def print_docstring() -> Callable:
     """Decorator to print a docstring."""
 
     def decorator(func: Callable) -> Callable:
-        """Define decorator"""
+        """Define decorator."""
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            """Print docstring and call function"""
+            """Print docstring and call function."""
             print(func.__doc__)
             return func(*args, **kwargs)
 
@@ -69,10 +70,7 @@ def run_svante(args, component):
     command_string = " ".join(args)
     print(f"Testing {component} with" + f'"svange {command_string}"')
     try:
-        sh.svante(
-            args,
-            _out=sys.stderr,
-        )
+        sh.svante(args)
     except ErrorReturnCode as errors:
         print(errors)
         pytest.fail(f"{component} failed")

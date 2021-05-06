@@ -4,7 +4,7 @@ Svante: Arrhenius Plots
 .. badges-begin
 
 | |PyPi| |Python Version| |Repo| |Downloads| |Dlrate|
-| |License| |Tests| |Coverage| |Codacy| |Issues|
+| |License| |Tests| |Coverage| |Codacy| |Issues| |Health|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/svante.svg
    :target: https://pypi.org/project/svante/
@@ -39,6 +39,10 @@ Svante: Arrhenius Plots
 .. |Read the Docs| image:: https://img.shields.io/readthedocs/svante/latest.svg?label=Read%20the%20Docs
    :target: https://svante.readthedocs.io/
    :alt: Read the documentation at https://svante.readthedocs.io/
+.. |Health| image:: https://snyk.io/advisor/python/svante/badge.svg
+  :target: https://snyk.io/advisor/python/svante
+  :alt: Snyk health
+
 .. badges-end
 
 .. image:: https://raw.githubusercontent.com/hydrationdynamics/svante/main/docs/_static/logo.png

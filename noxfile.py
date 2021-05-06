@@ -119,7 +119,7 @@ def safety(session: Session) -> None:
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["svante", "tests", "docs/conf.py"]
+    args = session.posargs or ["svante"]
     session.install(".")
     session.install("mypy", "pytest")
     session.run("mypy", *args)
@@ -144,7 +144,7 @@ def tests(session: Session) -> None:
     session.run("pytest", "--cov=svante", *session.posargs)
     cov_path = Path(".coverage")
     if cov_path.exists():
-        cov_path.rename(f".coverage.{random.randrange(100000)}")
+        cov_path.rename(f".coverage.{random.randrange(100000)}")  # noqa: S311
 
 
 @session
@@ -158,6 +158,7 @@ def coverage(session: Session) -> None:
     if not has_args and any(Path().glob(".coverage.*")):
         session.run("coverage", "combine")
     session.run("coverage", *args)
+
 
 @session(python=python_versions)
 def typeguard(session: Session) -> None:
@@ -194,7 +195,7 @@ def docs_build(session: Session) -> None:
 
 @session(python="3.8")
 def docs(session: Session) -> None:
-    """Build and serve the documentation with live reloading on file changes."""
+    """Build and serve documentation with live reloading on file changes."""
     args = session.posargs or ["--open-browser", "docs", "docs/_build"]
     session.install(".")
     session.install(

@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Global constants and other objects in common."""
+"""Global constants and shared functions in common."""
 # standard library imports
+from __future__ import annotations
+
 import sys
 from pathlib import Path
+from typing import Any
+
 if sys.version_info >= (3, 8):
     from typing import TypedDict  # pylint: disable=no-name-in-module
 else:
     from typing_extensions import TypedDict
 
+import loguru
 import toml
 import typer
-from loguru import logger  # type: ignore
+from loguru import logger
 from schema import And  # type: ignore
 from schema import Optional  # type: ignore
 from schema import Schema  # type: ignore
@@ -22,19 +27,19 @@ from .stat_dict import StatDict
 
 # global constants
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
+NO_LEVEL_BELOW = 30  # Don't print level for messages below this level
 
 
-class StateDict(TypedDict):
-
+class GlobalState(TypedDict):
     """Dictionary of global state variables."""
 
     verbose: bool
     log_level: str
 
 
-STATE: StateDict = {"verbose": False, "log_level": DEFAULT_STDERR_LOG_LEVEL}
-APP = typer.Typer(help=docstring, name="svante")
-GLOBAL_STATS = StatDict()
+STATE: GlobalState = {"verbose": False, "log_level": DEFAULT_STDERR_LOG_LEVEL}
+
+
 INPUTS_SCHEMA = Schema(
     [
         {
@@ -103,22 +108,28 @@ PLOTTING_SCHEMA = Schema(
         "plot": PLOT_SCHEMA,
     }
 )
-# GLOBAL_STATS["Δ H"] = 4223  # , 20.02, "kJ/mol", desc='Activation Enthalpy',)
-# print(GLOBAL_STATS)
-# b = Stat(23.37, units="K", sig_digits=3, desc="Temperature")
-# print(b)
-# c = Stat("This is not a quantity [or is it?]", desc="random description")
-# print(c)
-# d = Stat(True, desc="test of boolean")
-# print(d)
-#
-# sys.exit(1)
+
+
+def _stderr_format_func(record: loguru.Record) -> str:
+    """Do level-sensitive formatting."""
+    if record["level"].no < NO_LEVEL_BELOW:
+        return "<level>{message}</level>\n"
+    return "<level>{level}</level>: <level>{message}</level>\n"
+
+
+logger.remove()
+logger.add(sys.stderr, level=STATE["log_level"], format=_stderr_format_func)
+APP = typer.Typer(help=docstring, name="svante")
+STATS = StatDict(logger=logger, app=APP)
 # functions used in more than one module
+
+
 def read_toml_file(
     toml_path: Path,
     file_desc: str,
     schema_type: str,
-) -> dict:
+) -> Any:
+    """Read configuration and verify against schema."""
     if not toml_path.exists():
         logger.error(f'{file_desc} file "{toml_path}" does not exist')
         sys.exit(1)

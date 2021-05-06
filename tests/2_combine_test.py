@@ -12,8 +12,6 @@ from . import COMBINE_OUTPUTS
 from . import help_check
 from . import print_docstring
 from . import TOML_FILE
-# third-party imports
-# module imports
 
 # global constants
 svante = sh.Command("svante")
@@ -31,8 +29,7 @@ def test_combine(datadir_mgr):
     with datadir_mgr.in_tmp_dir(
         inpathlist=COMBINE_INPUTS,
         save_outputs=True,
-        outscope="global",
-        excludepaths=["logs/"],
+        outscope="module",
     ):
         args = ["--verbose", SUBCOMMAND, TOML_FILE]
         try:

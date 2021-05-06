@@ -10,11 +10,12 @@ from loguru import logger
 from .common import APP
 from .common import read_toml_file
 from .common import STATE
-
-# third-party imports
+from .common import STATS
+from .stat_dict import Stat
 
 
 @APP.command()
+@STATS.auto_save_and_report
 def combine(toml_file: Path) -> None:
     """Combine rate info from multiple files."""
     conf = read_toml_file(toml_file, "configuration file", "combine")
@@ -35,12 +36,12 @@ def combine(toml_file: Path) -> None:
         uncertainty_col_in = dataset["rate"]["uncertainties"]
         uncertainty_col_out = "±" + rate_col_out
         output_cols += [rate_col_out, uncertainty_col_out]
-        T_uncertainty_col = f"±T.{rate_col_out}"
-        delta_t_cols.append(T_uncertainty_col)
+        t_uncertainty_col = f"±T.{rate_col_out}"
+        delta_t_cols.append(t_uncertainty_col)
         if "uncertainty" in dataset["T"]:
-            df[T_uncertainty_col] = dataset["T"]["uncertainty"]
+            df[t_uncertainty_col] = dataset["T"]["uncertainty"]
         elif "uncertainties" in dataset["T"]:
-            df[T_uncertainty_col] = df[dataset["T"]["uncertainties"]]
+            df[t_uncertainty_col] = df[dataset["T"]["uncertainties"]]
         else:
             logger.error(
                 "Neither T uncertainty value nor uncertainty column found"
@@ -56,7 +57,7 @@ def combine(toml_file: Path) -> None:
             },
             inplace=True,
         )
-        df = df[[T_uncertainty_col, rate_col_out, uncertainty_col_out]]
+        df = df[[t_uncertainty_col, rate_col_out, uncertainty_col_out]]
         logger.info(f"   {uri}: {n_points} points from {t_min} to {t_max} K")
         if STATE["verbose"]:
             print(rf'   {outputs[i]["label"]}')
@@ -65,12 +66,15 @@ def combine(toml_file: Path) -> None:
     combined = pd.concat(frames, axis=1)
     combined["±T"] = combined[delta_t_cols].max(axis=1)
     combined = combined[output_cols]
-    t_min = combined.index.min()
-    t_max = combined.index.max()
+    t_min = float(combined.index.min())
+    t_max = float(combined.index.max())
     n_points = len(combined)
     output_file = conf["combined"]["filename"]
     if STATE["verbose"]:
         print(combined)
     logger.info(f"{n_points} points from {t_min} to {t_max} K")
+    STATS["n_points"] = Stat(n_points)
+    STATS["T_min"] = Stat(t_min, desc="min temperature", units="K")
+    STATS["T_max"] = Stat(t_max, desc="max temperature", units="K")
     logger.info(f"written to {output_file}")
     combined.to_csv(output_file, sep="\t", float_format="%.4f")
