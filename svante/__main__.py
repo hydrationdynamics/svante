@@ -21,6 +21,7 @@ from .plot import plot
 # global constants
 unused_cli_funcs = (combine, plot)  # noqa: F841
 VERSION: str = metadata.version(NAME)
+click_object = typer.main.get_command(APP)  # noqa: F841
 
 
 def version_callback(value: bool) -> None:
@@ -53,9 +54,6 @@ def set_global_state(
     unused_state_str = f"{version}"  # noqa: F841
 
 
-click_object = typer.main.get_command(APP)  # noqa: F841
-
-
-def main():
+def main() -> None:
     """Run the app."""
     APP()
