@@ -8,4 +8,3 @@ License: BSD-3-Clause
 Copyright © 2021, GenerisBio LLC.
 All rights reserved.
 """
-__version__ = "0.2.0"

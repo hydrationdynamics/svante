@@ -1,24 +1,32 @@
 # -*- coding: utf-8 -*-
 """Command-line interface and logging configuration."""
 # standard-library imports
+import sys
 from typing import Optional
+
+if sys.version_info >= (3, 8):
+    from importlib import metadata
+else:
+    import importlib_metadata as metadata
 
 import typer
 
-from . import __version__
 from .combine import combine
 from .common import APP
+from .common import NAME
 from .common import STATE
 from .plot import plot
 
+
 # global constants
 unused_cli_funcs = (combine, plot)  # noqa: F841
+VERSION = metadata.version(NAME)
 
 
 def version_callback(value: bool) -> None:
     """Print version info."""
     if value:
-        typer.echo(f"{APP.info.name} version {__version__}")
+        typer.echo(f"{APP.info.name} version {VERSION}")
         raise typer.Exit()
 
 

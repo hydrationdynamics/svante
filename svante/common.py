@@ -28,6 +28,7 @@ from .stat_dict import StatDict
 # global constants
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
 NO_LEVEL_BELOW = 30  # Don't print level for messages below this level
+NAME = "svante"
 
 
 class GlobalState(TypedDict):
@@ -119,7 +120,7 @@ def _stderr_format_func(record: loguru.Record) -> str:
 
 logger.remove()
 logger.add(sys.stderr, level=STATE["log_level"], format=_stderr_format_func)
-APP = typer.Typer(help=docstring, name="svante")
+APP = typer.Typer(help=docstring, name=NAME)
 STATS = StatDict(logger=logger, app=APP)
 # functions used in more than one module
 
