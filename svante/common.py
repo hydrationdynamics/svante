@@ -125,12 +125,12 @@ STATS = StatDict(logger=logger, app=APP)
 # functions used in more than one module
 
 
-def read_toml_file(
+def read_conf_file(
     toml_path: Path,
     file_desc: str,
     schema_type: str,
 ) -> Any:
-    """Read configuration and verify against schema."""
+    """Read TOML configuration and verify against schema."""
     if not toml_path.exists():
         logger.error(f'{file_desc} file "{toml_path}" does not exist')
         sys.exit(1)

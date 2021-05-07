@@ -8,7 +8,7 @@ import pandas as pd
 from loguru import logger
 
 from .common import APP
-from .common import read_toml_file
+from .common import read_conf_file
 from .common import STATE
 from .common import STATS
 from .stat_dict import Stat
@@ -18,7 +18,7 @@ from .stat_dict import Stat
 @STATS.auto_save_and_report
 def combine(toml_file: Path) -> None:
     """Combine rate info from multiple files."""
-    conf = read_toml_file(toml_file, "configuration file", "combine")
+    conf = read_conf_file(toml_file, "configuration file", "combine")
     inputs = conf["inputs"]
     outputs = conf["combined"]["rates"]
     logger.info(

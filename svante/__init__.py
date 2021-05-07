@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-r"""Svante -- configurable Arrhenius plots and fits.
+"""Svante -- configurable Arrhenius plots and fits.
 
 \b
 For complete help visit https://github.com/hydrationdynamics/svante
@@ -7,4 +7,4 @@ For complete help visit https://github.com/hydrationdynamics/svante
 License: BSD-3-Clause
 Copyright © 2021, GenerisBio LLC.
 All rights reserved.
-"""
+"""  # noqa: D301

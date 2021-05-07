@@ -12,7 +12,7 @@ from loguru import logger
 from scipy.constants import gas_constant  # type: ignore
 
 from .common import APP
-from .common import read_toml_file
+from .common import read_conf_file
 from .common import STATE
 from .common import STATS
 from .stat_dict import Stat
@@ -47,7 +47,7 @@ def plot(
     show: bool = SHOW_OPTION,
 ) -> None:
     """Arrhenius plot with fits."""
-    conf = read_toml_file(toml_file, "configuration file", "plot")
+    conf = read_conf_file(toml_file, "configuration file", "plot")
     combined = conf["combined"]
     plot_params = conf["plot"]
     df = pd.read_csv(combined["filename"], sep="\t", index_col=0)

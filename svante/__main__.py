@@ -39,12 +39,12 @@ VERSION_OPTION = typer.Option(
 
 
 @APP.callback()
-def main(
+def set_global_state(
     verbose: bool = False,
     quiet: bool = False,
     version: Optional[bool] = VERSION_OPTION,
 ) -> None:
-    """Run the APP and do global-state actions."""
+    """Set global-state variables."""
     if verbose:
         STATE["verbose"] = True
         STATE["log_level"] = "DEBUG"
@@ -53,4 +53,9 @@ def main(
     unused_state_str = f"{version}"  # noqa: F841
 
 
-APP()
+click_object = typer.main.get_command(APP)  # noqa: F841
+
+
+def main():
+    """Run the app."""
+    APP()
