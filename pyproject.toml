@@ -58,9 +58,9 @@ safety = "^1.10.3"
 mypy = "^0.812"
 typeguard = "^2.12.0"
 xdoctest = {extras = ["colors"], version = "^0.15.4"}
-sphinx = "^3.5.4"
+sphinx = "*"
 sphinx-autobuild = "^2021.3.14"
-pre-commit = "^2.12.0"
+pre-commit = "*"
 flake8 = "^3.9.0"
 flake8-bandit = "^2.1.2"
 flake8-bugbear = "^21.4.3"
@@ -78,7 +78,7 @@ isort = "^5.8.0"
 sh = "^1.14.1"
 nox-poetry = "^0.8.4"
 pytest-cov = "^2.11.1"
-black = "^21.4b0"
+black = "*"
 flake8-rst-docstrings = "^0.2.3"
 pandas-stubs = "^1.1.0"
 
@@ -87,7 +87,7 @@ svante = "svante.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ['py37', 'py38']
+target-version = ['py37', 'py38', 'py39']
 include = '\.pyi?$'
 exclude = '''
 /(

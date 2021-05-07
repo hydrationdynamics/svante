@@ -7,7 +7,7 @@ from typing import Optional
 if sys.version_info >= (3, 8):
     from importlib import metadata
 else:
-    import importlib_metadata as metadata
+    import importlib_metadata as metadata  # type: ignore
 
 import typer
 
@@ -20,7 +20,7 @@ from .plot import plot
 
 # global constants
 unused_cli_funcs = (combine, plot)  # noqa: F841
-VERSION = metadata.version(NAME)
+VERSION: str = metadata.version(NAME)
 
 
 def version_callback(value: bool) -> None:
