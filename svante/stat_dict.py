@@ -173,7 +173,7 @@ class StatDict(object):
         self._show_run_no = 0
         self._table_format = DEFAULT_TABLE_FORMAT
         self.run_no = 1
-        self._metadata_handlers = {
+        self._metadata_handlers: Dict[str, Any] = {
             "_run_list": self._load_run_list,
             "_title": self._load_title,
             "_unit_defs": self.define_units,
@@ -391,7 +391,7 @@ class StatDict(object):
         with self._save_path.open("w") as fh:
             json.dump(outdict, fh, indent=1)
 
-    def _load_run_list(self, run_list: list) -> None:
+    def _load_run_list(self, run_list: List[Dict[str, Any]]) -> None:
         """Load a run_list from a list of saved RunDicts."""
         run_nos = [r["run_no"] for r in self._run_list]
         for r in run_list:
