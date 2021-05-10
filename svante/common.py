@@ -23,7 +23,7 @@ from schema import SchemaError  # type: ignore
 from schema import Use  # type: ignore
 
 from . import __doc__ as docstring
-from .stat_dict import StatDict
+from .statsdict import StatsDict
 
 # global constants
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
@@ -121,7 +121,7 @@ def _stderr_format_func(record: loguru.Record) -> str:
 logger.remove()
 logger.add(sys.stderr, level=STATE["log_level"], format=_stderr_format_func)
 APP = typer.Typer(help=docstring, name=NAME)
-STATS = StatDict(logger=logger, app=APP)
+STATS = StatsDict(logger=logger, app=APP)
 # functions used in more than one module
 
 

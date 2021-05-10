@@ -133,7 +133,7 @@ class Stat(object):
 
 
 @attr.s(auto_attribs=True)
-class RunDict(Dict[str, Any]):
+class _RunDict(Dict[str, Any]):
     """Holder of run-related items."""
 
     run_no: int = 1
@@ -146,7 +146,7 @@ class RunDict(Dict[str, Any]):
         return self.__dict__.copy()
 
 
-class StatDict(object):
+class StatsDict(object):
     """Holds a class of Stat objects that can be serialized to JSON."""
 
     def __init__(  # noqa: C901
@@ -166,7 +166,7 @@ class StatDict(object):
         self._app: Optional[typer.Typer] = app
         self._stat_dict: Dict[str, Stat] = {}
         self._unit_defs: List[str] = []
-        self._run_list: List[RunDict] = []
+        self._run_list: List[_RunDict] = []
         self._verbose = verbose
         self._log_stats = log_stats
         self._show_runs = show_runs
@@ -210,7 +210,7 @@ class StatDict(object):
                     self.run_no = maxrun_no
                 else:
                     self.run_no = maxrun_no + 1
-        self._run_dict = RunDict(self.run_no)
+        self._run_dict = _RunDict(self.run_no)
         if append_run:
             self._run_list.append(self._run_dict)
         self._logger.debug(f'Run {self.run_no} stats in "{self._save_path}"')
@@ -396,7 +396,7 @@ class StatDict(object):
         run_nos = [r["run_no"] for r in self._run_list]
         for r in run_list:
             if r["run_no"] not in run_nos:
-                self._run_list.append(RunDict(**r))
+                self._run_list.append(_RunDict(**r))
 
     def _load_title(self, title: str) -> None:
         """Load a title."""
@@ -428,7 +428,6 @@ class StatDict(object):
                     f"{previously_defined} stats" + " were previously defined"
                 )
             return
-        raise FileNotFoundError(self._save_path)
 
 
 def _test() -> None:
@@ -446,7 +445,7 @@ def _test() -> None:
 
     loguru.logger.remove()
     loguru.logger.add(sys.stderr, level="DEBUG", format=stderr_format_func)
-    stats = StatDict(logger=loguru.logger)
+    stats = StatsDict(logger=loguru.logger)
 
     @stats.auto_save_and_report
     def define_some_stats() -> None:

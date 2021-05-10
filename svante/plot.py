@@ -15,7 +15,7 @@ from .common import APP
 from .common import read_conf_file
 from .common import STATE
 from .common import STATS
-from .stat_dict import Stat
+from .statsdict import Stat
 
 # from uncertainties import unumpy  # type: ignore
 
