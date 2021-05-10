@@ -173,26 +173,34 @@ class StatDict(object):
         self._show_run_no = 0
         self._table_format = DEFAULT_TABLE_FORMAT
         self.run_no = 1
-        if module_name is None:
+        self._metadata_handlers = {
+            "_run_list": self._load_run_list,
+            "_title": self._load_title,
+            "_unit_defs": self.define_units,
+        }
+        if (defaulted_module_name := module_name) is None:
             if __name__ == "__main__":
-                module_name = "global"
+                defaulted_module_name = "global"
             else:
-                module_name = __name__.split(".")[0]
+                defaulted_module_name = __name__.split(".")[0]
         if logger is None:
             self._logger = loguru.logger
         else:
             self._logger = logger
         if title is None:
-            self._title = f"Stats from {module_name}"
-        if save_dir is None:
-            save_dir = "."
-        self.set_table_format(table_fmt)
+            self._title = f"Stats from {defaulted_module_name}"
+        if (defaulted_save_dir := save_dir) is None:
+            defaulted_save_dir = "."
         self._save_path = (
-            Path(save_dir) / f"{module_name}_stats.json"
+            Path(defaulted_save_dir) / f"{defaulted_module_name}_stats.json"
         ).resolve()
+        self.set_table_format(table_fmt)
         append_run = True
-        if load_existing and self._save_path.exists():
-            self.load()
+        if load_existing:
+            try:
+                self.load()
+            except FileNotFoundError:
+                pass
             if len(self._run_list) > 0:
                 run_dict = self._run_list[-1]
                 maxrun_no = run_dict.run_no
@@ -233,8 +241,7 @@ class StatDict(object):
         value.run_no = self.run_no
         self._stat_dict[key] = value
         if self._log_stats:
-            desc_str = value.format_desc()
-            if desc_str != "":
+            if (desc_str := value.format_desc()) != "":
                 desc_str = " " + desc_str
             self._logger.info(f"Stat {key}{desc_str}:\t{value}")
 
@@ -384,10 +391,21 @@ class StatDict(object):
         with self._save_path.open("w") as fh:
             json.dump(outdict, fh, indent=1)
 
-    def load(self) -> None:  # noqa: C901
+    def _load_run_list(self, run_list: list) -> None:
+        """Load a run_list from a list of saved RunDicts."""
+        run_nos = [r["run_no"] for r in self._run_list]
+        for r in run_list:
+            if r["run_no"] not in run_nos:
+                self._run_list.append(RunDict(**r))
+
+    def _load_title(self, title: str) -> None:
+        """Load a title."""
+        self._title = title
+
+    def load(self) -> None:
         """Load stats and list of run info from JSON file."""
         if not self._save_path.exists():
-            raise FileExistsError(self._save_path)
+            raise FileNotFoundError
         with self._save_path.open() as fh:
             try:
                 load_dict = json.load(fh)
@@ -397,28 +415,20 @@ class StatDict(object):
                 )
                 self._logger.error(e)
                 sys.exit(1)
-        meta_dict = {}
-        stat_dict = {}
-        for key in load_dict:
-            if key.startswith("_"):
-                meta_dict[key] = load_dict[key]
-            else:
-                stat_dict[key] = load_dict[key]
-        if "_unit_defs" in meta_dict:
-            self.define_units(meta_dict["_unit_defs"])
-        if "_title" in meta_dict:
-            self._title = meta_dict["_title"]
-        run_nos = [r["run_no"] for r in self._run_list]
-        if "_run_list" in meta_dict:
-            for r in meta_dict["_run_list"]:
-                if r["run_no"] not in run_nos:
-                    self._run_list.append(RunDict(**r))
-        for key in stat_dict:
-            self._stat_dict[key] = Stat(**stat_dict[key])
-        if self._verbose:
-            self._logger.debug(
-                f"{len(stat_dict)} stats" + " were previously defined"
-            )
+            previously_defined = 0
+            for key in load_dict:
+                if key in self._metadata_handlers:
+                    self._metadata_handlers[key](load_dict[key])
+                else:
+                    if key in self._stat_dict:
+                        previously_defined += 1
+                    self._stat_dict[key] = Stat(**load_dict[key])
+            if self._verbose:
+                self._logger.debug(
+                    f"{previously_defined} stats" + " were previously defined"
+                )
+            return
+        raise FileNotFoundError(self._save_path)
 
 
 def _test() -> None:

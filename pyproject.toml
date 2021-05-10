@@ -33,6 +33,7 @@ keywords = [
 Changelog = "https://github.com/joelb123/svante/releases"
 
 [tool.poetry.dependencies]
+# python restricted to <3.10 until a new version of pydantic is released
 python = "^3.7.1,<3.10"
 typer = "*"
 pandas = "*"
@@ -49,7 +50,6 @@ loguru = "*"
 schema = "*"
 toml = "^0.10.2"
 attrs = "*"
-importlib-metadata = {version = "^4.0.1", python = "<3.8"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -87,7 +87,7 @@ svante = "svante.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ['py37', 'py38', 'py39']
+target-version = ['py38', 'py39']
 include = '\.pyi?$'
 exclude = '''
 /(
