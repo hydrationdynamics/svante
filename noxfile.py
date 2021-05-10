@@ -21,7 +21,7 @@ except ImportError:
 
 
 package = "svante"
-python_versions = ["3.9", "3.8", "3.7"]
+python_versions = ["3.9", "3.8"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
@@ -86,7 +86,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
         hook.write_text("\n".join(lines))
 
 
-@session(name="pre-commit", python=["3.8", "3.9"])
+@session(name="pre-commit", python=python_versions)
 def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or ["run", "--all-files", "--show-diff-on-failure"]
@@ -186,7 +186,7 @@ def xdoctest(session: Session) -> None:
     session.run("python", "-m", "xdoctest", package, *args)
 
 
-@session(name="docs-build", python="3.8")
+@session(name="docs-build", python=python_versions)
 def docs_build(session: Session) -> None:
     """Build the documentation."""
     args = session.posargs or ["docs", "docs/_build"]
@@ -200,7 +200,7 @@ def docs_build(session: Session) -> None:
     session.run("sphinx-build", *args)
 
 
-@session(python="3.8")
+@session(python=python_versions)
 def docs(session: Session) -> None:
     """Build and serve documentation with live reloading on file changes."""
     args = session.posargs or ["--open-browser", "docs", "docs/_build"]

@@ -154,4 +154,3 @@ def plot(
         )
         if show:
             plt.show()
-

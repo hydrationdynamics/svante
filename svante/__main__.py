@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 """Command-line interface and logging configuration."""
 # standard-library imports
-import sys
+from importlib import metadata
 from typing import Optional
-
-if sys.version_info >= (3, 8):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata  # type: ignore
 
 import typer
 
