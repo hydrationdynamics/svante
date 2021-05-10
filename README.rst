@@ -16,7 +16,7 @@ Svante: Arrhenius Plots
     :target: https://github.com/hydrationdynamics/svante
     :alt: GitHub repository
 .. |Downloads| image:: https://pepy.tech/badge/svante
-     :target: https://pepy.tech/project/pytest_datadir_mgr
+     :target: https://pepy.tech/project/svante
      :alt: Download stats
 .. |Dlrate| image:: https://img.shields.io/pypi/dm/svante
    :target: https://github.com/hydrationdynamics/svante
