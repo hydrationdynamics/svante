@@ -22,9 +22,6 @@ category = "dev"
 optional = false
 python-versions = "*"
 
-[package.dependencies]
-importlib-metadata = {version = ">=0.23,<5", markers = "python_version == \"3.7\""}
-
 [package.extras]
 test = ["coverage", "flake8", "pexpect", "wheel"]
 
@@ -124,8 +121,6 @@ mypy-extensions = ">=0.4.3"
 pathspec = ">=0.8.1,<1"
 regex = ">=2020.1.8"
 toml = ">=0.10.1"
-typed-ast = {version = ">=1.4.2", markers = "python_version < \"3.8\""}
-typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -289,7 +284,6 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [package.dependencies]
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 mccabe = ">=0.6.0,<0.7.0"
 pycodestyle = ">=2.7.0,<2.8.0"
 pyflakes = ">=2.3.0,<2.4.0"
@@ -443,22 +437,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
-name = "importlib-metadata"
-version = "4.0.1"
-description = "Read metadata from Python packages"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-typing-extensions = {version = ">=3.6.4", markers = "python_version < \"3.8\""}
-zipp = ">=0.5"
-
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
-testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
-
-[[package]]
 name = "iniconfig"
 version = "1.1.1"
 description = "iniconfig: brain-dead simple config-ini parsing"
@@ -603,7 +581,6 @@ python-versions = ">=3.6"
 [package.dependencies]
 argcomplete = ">=1.9.4,<2.0"
 colorlog = ">=2.6.1,<5.0.0"
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 py = ">=1.4.0,<2.0.0"
 virtualenv = ">=14.0.0"
 
@@ -666,9 +643,6 @@ category = "dev"
 optional = false
 python-versions = "*"
 
-[package.dependencies]
-typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.8\""}
-
 [[package]]
 name = "pathspec"
 version = "0.8.1"
@@ -725,7 +699,6 @@ optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 packaging = "*"
 
 [package.extras]
@@ -741,9 +714,6 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
-[package.dependencies]
-importlib-metadata = {version = ">=0.12", markers = "python_version < \"3.8\""}
-
 [package.extras]
 dev = ["pre-commit", "tox"]
 
@@ -758,7 +728,6 @@ python-versions = ">=3.6.1"
 [package.dependencies]
 cfgv = ">=2.0.0"
 identify = ">=1.0.0"
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 nodeenv = ">=0.11.1"
 pyyaml = ">=5.1"
 toml = "*"
@@ -870,7 +839,6 @@ python-versions = ">=3.6"
 atomicwrites = {version = ">=1.0", markers = "sys_platform == \"win32\""}
 attrs = ">=19.2.0"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
-importlib-metadata = {version = ">=0.12", markers = "python_version < \"3.8\""}
 iniconfig = "*"
 packaging = "*"
 pluggy = ">=0.12,<1.0.0a1"
@@ -1266,11 +1234,11 @@ test = ["pytest"]
 
 [[package]]
 name = "statsdict"
-version = "0.1.0"
+version = "0.1.3"
 description = "Saveable dictionary of global stats"
 category = "main"
 optional = false
-python-versions = ">=3.7.1,<3.10"
+python-versions = ">=3.8.0,<3.10"
 
 [package.dependencies]
 attrs = "*"
@@ -1308,7 +1276,6 @@ optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-importlib-metadata = {version = ">=1.7.0", markers = "python_version < \"3.8\""}
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 
 [[package]]
@@ -1387,7 +1354,7 @@ doc = ["mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=5.4.0,<6.0.0)", "markdown-
 name = "typing-extensions"
 version = "3.10.0.0"
 description = "Backported and Experimental Type Hints for Python 3.5+"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -1433,7 +1400,6 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
 appdirs = ">=1.4.3,<2"
 distlib = ">=0.3.1,<1"
 filelock = ">=3.0.0,<4"
-importlib-metadata = {version = ">=0.12", markers = "python_version < \"3.8\""}
 six = ">=1.9.0,<2"
 
 [package.extras]
@@ -1471,22 +1437,10 @@ jupyter = ["nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
 optional = ["pygments", "colorama", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
 tests = ["pytest", "pytest-cov", "codecov", "scikit-build", "cmake", "ninja", "pybind11", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
 
-[[package]]
-name = "zipp"
-version = "3.4.1"
-description = "Backport of pathlib-compatible object wrapper for zip files"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
-testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
-
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.7.1,<3.10"
-content-hash = "005f132751db8019dfbd6cda268d89035585e4c515391e34f6d3a23a8e53a1c3"
+python-versions = "^3.8.0,<3.10"
+content-hash = "45415e9b1e2b0dcbcad3d1d3e4ed8246c13385cb8465ef3733a146c1fcff582e"
 
 [metadata.files]
 alabaster = [
@@ -1700,10 +1654,6 @@ idna = [
 imagesize = [
     {file = "imagesize-1.2.0-py2.py3-none-any.whl", hash = "sha256:6965f19a6a2039c7d48bca7dba2473069ff854c36ae6f19d2cde309d998228a1"},
     {file = "imagesize-1.2.0.tar.gz", hash = "sha256:b1f6b5a4eab1f73479a50fb79fcf729514a900c341d8503d62a62dbc4127a2b1"},
-]
-importlib-metadata = [
-    {file = "importlib_metadata-4.0.1-py3-none-any.whl", hash = "sha256:d7eb1dea6d6a6086f8be21784cc9e3bcfa55872b52309bc5fad53a8ea444465d"},
-    {file = "importlib_metadata-4.0.1.tar.gz", hash = "sha256:8c501196e49fb9df5df43833bdb1e4328f64847763ec8a50703148b73784d581"},
 ]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
@@ -2254,8 +2204,8 @@ sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib_serializinghtml-1.1.4-py2.py3-none-any.whl", hash = "sha256:f242a81d423f59617a8e5cf16f5d4d74e28ee9a66f9e5b637a18082991db5a9a"},
 ]
 statsdict = [
-    {file = "statsdict-0.1.0-py3-none-any.whl", hash = "sha256:6ed136a71a56539d53c6389470f52d0964dc904ddeb7acf5dfe8d6ddb07016dc"},
-    {file = "statsdict-0.1.0.tar.gz", hash = "sha256:87fd8933a209dcf67dc0f98e9bc33933da440d9be02baf98b43052baabf6387b"},
+    {file = "statsdict-0.1.3-py3-none-any.whl", hash = "sha256:1111a5694684cfe04627d7b14004acf640b7595d0caccb7918c32f2c56c698f8"},
+    {file = "statsdict-0.1.3.tar.gz", hash = "sha256:1faeb20a6073975047c0d80547144e96a88419e6489ee5dd9ae050192a707cdb"},
 ]
 statsmodels = [
     {file = "statsmodels-0.12.2-cp36-cp36m-macosx_10_15_x86_64.whl", hash = "sha256:c1d98ce2072f5e772cbf91d05475490368da5d3ee4a3150062330c7b83221ceb"},
@@ -2404,8 +2354,4 @@ xdoctest = [
     {file = "xdoctest-0.15.4-py2.py3-none-any.whl", hash = "sha256:4b91eb67e45e51a254ff9370adb72a0c82b08289844c95cfd3a1186d7ec4f694"},
     {file = "xdoctest-0.15.4-py3-none-any.whl", hash = "sha256:33d4a12cf70da245ca3f71be9ef03e0615fa862826bf6a08e8f025ce693e496d"},
     {file = "xdoctest-0.15.4.tar.gz", hash = "sha256:ef1f93d2147988d3cb6f35c026ec32aca971923f86945a775f61e2f8de8505d1"},
-]
-zipp = [
-    {file = "zipp-3.4.1-py3-none-any.whl", hash = "sha256:51cb66cc54621609dd593d1787f286ee42a5c0adbb4b29abea5a63edc3e03098"},
-    {file = "zipp-3.4.1.tar.gz", hash = "sha256:3607921face881ba3e026887d8150cca609d517579abe052ac81fc5aeffdbd76"},
 ]
