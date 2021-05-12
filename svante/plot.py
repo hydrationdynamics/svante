@@ -10,12 +10,13 @@ import pydove as dv  # type: ignore
 import typer
 from loguru import logger
 from scipy.constants import gas_constant  # type: ignore
+from statsdict import Stat
 
 from .common import APP
 from .common import read_conf_file
 from .common import STATE
 from .common import STATS
-from .statsdict import Stat
+
 
 # from uncertainties import unumpy  # type: ignore
 

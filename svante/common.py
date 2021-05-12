@@ -6,11 +6,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from typing import Any
-
-if sys.version_info >= (3, 8):
-    from typing import TypedDict  # pylint: disable=no-name-in-module
-else:
-    from typing_extensions import TypedDict
+from typing import TypedDict  # pylint: disable=no-name-in-module
 
 import loguru
 import toml
@@ -21,9 +17,10 @@ from schema import Optional  # type: ignore
 from schema import Schema  # type: ignore
 from schema import SchemaError  # type: ignore
 from schema import Use  # type: ignore
+from statsdict import StatsDict
 
 from . import __doc__ as docstring
-from .statsdict import StatsDict
+
 
 # global constants
 DEFAULT_STDERR_LOG_LEVEL = "INFO"
@@ -121,7 +118,7 @@ def _stderr_format_func(record: loguru.Record) -> str:
 logger.remove()
 logger.add(sys.stderr, level=STATE["log_level"], format=_stderr_format_func)
 APP = typer.Typer(help=docstring, name=NAME)
-STATS = StatsDict(logger=logger, app=APP)
+STATS = StatsDict(logger=logger, app=APP, module_name=NAME)
 # functions used in more than one module
 
 

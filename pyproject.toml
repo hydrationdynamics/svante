@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "svante"
-version = "0.2.6"
+version = "0.3.1"
 description = "Configurable Arrhenius plots with uncertainties and ratios"
 authors = ["Joel Berendzen <joel@generisbio.com>"]
 license = "BSD-3-Clause"
@@ -43,13 +43,14 @@ scipy = "*"
 pydove = "*"
 Pint = "*"
 uncertainties = "*"
-shellingham = "^1.4.0"
+shellingham = "*"
 colorama = "*"
 tabulate = "*"
 loguru = "*"
 schema = "*"
-toml = "^0.10.2"
+toml = "*"
 attrs = "*"
+statsdict = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -79,9 +80,9 @@ nox-poetry = "^0.8.4"
 pytest-cov = "^2.11.1"
 black = "*"
 flake8-rst-docstrings = "^0.2.3"
-pandas-stubs = "^1.1.0"
 sphinx-click = "^2.7.1"
 icecream = "^2.1.0"
+pandas-stubs = "*"
 
 [tool.poetry.scripts]
 svante = "svante.__main__:main"

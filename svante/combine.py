@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pandas as pd
 from loguru import logger
+from statsdict import Stat
 
 from .common import APP
 from .common import read_conf_file
 from .common import STATE
 from .common import STATS
-from .statsdict import Stat
 
 
 @APP.command()
