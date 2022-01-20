@@ -30,8 +30,8 @@ Svante: Arrhenius Plots
 .. |Coverage| image:: https://codecov.io/gh/hydrationdynamics/svante/branch/main/graph/badge.svg
     :target: https://codecov.io/gh/hydrationdynamics/svante
     :alt: Codecov.io test coverage
-.. |Codacy| image:: https://api.codacy.com/project/badge/Grade/d9c8687d3c544049a293b2faf8919c07
-    :target: https://www.codacy.com/gh/hydrationdynamics/svante?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hydrationdynamics/svante&amp;utm_campaign=Badge_Grade
+.. |Codacy| image:: https://app.codacy.com/project/badge/Grade/4f45fe0d26104a6d86cb35404aa61e77
+   :target: https://www.codacy.com/gh/hydrationdynamics/svante/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hydrationdynamics/svante&amp;utm_campaign=Badge_Grade
     :alt: Codacy.io grade
 .. |Issues| image:: https://img.shields.io/github/issues/hydrationdynamics/svante.svg
     :target:  https://github.com/hydrationdynamics/svante/issues

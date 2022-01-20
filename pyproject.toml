@@ -32,8 +32,7 @@ keywords = [
 Changelog = "https://github.com/joelb123/svante/releases"
 
 [tool.poetry.dependencies]
-# python restricted to <3.10 until a new version of pydantic is released
-python = "^3.8.0,<3.10"
+python = "^3.8.0,<3.11"
 typer = "*"
 pandas = "*"
 matplotlib = "*"
@@ -49,46 +48,46 @@ loguru = "*"
 schema = "*"
 toml = "*"
 attrs = "*"
-statsdict = "^0.1.0"
+statsdict = "*"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
-coverage = {extras = ["toml"], version = "^5.4"}
-safety = "^1.10.3"
-mypy = "^0.812"
-typeguard = "^2.12.0"
-xdoctest = {extras = ["colors"], version = "^0.15.4"}
-sphinx-autobuild = "^2021.3.14"
+pytest = "*"
+coverage = {extras = ["toml"], version = "*"}
+safety = "*"
+mypy = "*"
+typeguard = "*"
+xdoctest = {extras = ["colors"], version = "*"}
+sphinx-autobuild = "*"
 pre-commit = "*"
-flake8 = "^3.9.0"
-flake8-bandit = "^2.1.2"
-flake8-bugbear = "^21.4.3"
-flake8-docstrings = "^1.6.0"
-pep8-naming = "^0.11.1"
-darglint = "^1.8.0"
-reorder-python-imports = "^2.4.0"
-pre-commit-hooks = "^3.4.0"
-sphinx-rtd-theme = "^0.5.2"
-Pygments = "^2.9.0"
-pytest-datadir-mgr = "^1.2.5"
-flynt = "^0.64"
-isort = "^5.8.0"
-sh = "^1.14.1"
-nox-poetry = "^0.8.4"
-pytest-cov = "^2.11.1"
+flake8 = "*"
+flake8-bandit = "*"
+flake8-bugbear = "*"
+flake8-docstrings = "*"
+pep8-naming = "*"
+darglint = "*"
+reorder-python-imports = "*"
+pre-commit-hooks = "*"
+sphinx-rtd-theme = "*"
+Pygments = "*"
+pytest-datadir-mgr = "*"
+flynt = "*"
+isort = "*"
+sh = "*"
+nox-poetry = "*"
+pytest-cov = "*"
 black = "*"
-flake8-rst-docstrings = "^0.2.3"
-icecream = "^2.1.0"
+flake8-rst-docstrings = "*"
+icecream = "*"
 pandas-stubs = "*"
-Sphinx = "^4.0.2"
-sphinx-click = "^3.0.0"
+Sphinx = "*"
+sphinx-click = "*"
 
 [tool.poetry.scripts]
 svante = "svante.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ['py38', 'py39']
+target-version = ['py38', 'py39', 'py310']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -140,5 +139,5 @@ style = "semver"
 addopts = "-x"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.1.0"]
 build-backend = "poetry.core.masonry.api"
