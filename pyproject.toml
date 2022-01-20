@@ -17,6 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Scientific/Engineering :: Chemistry"
 ]
 keywords = [
@@ -81,6 +82,7 @@ icecream = "*"
 pandas-stubs = "*"
 Sphinx = "*"
 sphinx-click = "*"
+types-toml = "^0.10.3"
 
 [tool.poetry.scripts]
 svante = "svante.__main__:main"

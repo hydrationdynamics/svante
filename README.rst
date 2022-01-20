@@ -66,7 +66,7 @@ Features
 Requirements
 ------------
 
-* Tested on Python 3.7 to 3.9 on Linux and Mac
+* Tested on Python 3.9 and 3.10 on Linux and Mac
 
 
 Installation

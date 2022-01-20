@@ -21,7 +21,7 @@ except ImportError:
 
 
 package = "svante"
-python_versions = ["3.9", "3.8"]
+python_versions = ["3.10", "3.9", "3.8"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
@@ -122,7 +122,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["svante"]
     session.install(".")
-    session.install("mypy", "pandas-stubs", "pytest")
+    session.install("mypy", "pandas-stubs", "types-toml", "pytest")
     session.run("mypy", *args)
     if not session.posargs:
         session.run(
