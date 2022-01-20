@@ -11,6 +11,7 @@
    usage
    reference
    contributing
+   funding
    Code of Conduct <codeofconduct>
    License <license>
-   Changelog <https://github.com/joelb123/svante/releases>
+   Changelog <https://github.com/hydrationdynamics/svante/releases>

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "svante"
-version = "0.3.1"
+version = "0.3.2"
 description = "Configurable Arrhenius plots with uncertainties and ratios"
 authors = ["Joel Berendzen <joel@generisbio.com>"]
 license = "BSD-3-Clause"
