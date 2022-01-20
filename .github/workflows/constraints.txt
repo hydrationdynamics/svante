@@ -1,5 +1,10 @@
 pip==21.1.1
+<<<<<<< HEAD
 nox==2022.1.7
 nox-poetry==0.8.5
+=======
+nox==2020.12.31
+nox-poetry==0.9.0
+>>>>>>> remotes/origin/dependabot/pip/dot-github/workflows/nox-poetry-0.9.0
 poetry==1.1.6
 virtualenv==20.4.6
