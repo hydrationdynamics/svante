@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "svante"
-version = "0.3.2"
+version = "0.3.3"
 description = "Configurable Arrhenius plots with uncertainties and ratios"
 authors = ["Joel Berendzen <joel@generisbio.com>"]
 license = "BSD-3-Clause"
@@ -9,7 +9,7 @@ homepage = "https://github.com/hydrationdynamics/svante"
 repository = "https://github.com/hydrationdynamics/svante"
 documentation = "https://svante.readthedocs.io"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
@@ -71,18 +71,14 @@ pre-commit-hooks = "*"
 sphinx-rtd-theme = "*"
 Pygments = "*"
 pytest-datadir-mgr = "*"
-flynt = "*"
-isort = "*"
 sh = "*"
 nox-poetry = "*"
 pytest-cov = "*"
-black = "*"
-flake8-rst-docstrings = "*"
-icecream = "*"
+black = {version= "*", allow-prereleases = true}
 pandas-stubs = "*"
 Sphinx = "*"
 sphinx-click = "*"
-types-toml = "^0.10.3"
+types-toml = "*"
 
 [tool.poetry.scripts]
 svante = "svante.__main__:main"
@@ -132,10 +128,6 @@ import_heading_thirdparty = "third-party imports"
 import_heading_firstparty = "first-party imports"
 import_heading_localfolder = "module imports"
 known_standard_library = "pkg_resources"
-
-[tool.poetry-dynamic-versioning]
-enable = false
-style = "semver"
 
 [tool.pytest.ini_options]
 addopts = "-x"
