@@ -11,26 +11,26 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { python-version: "3.10", os: ubuntu-latest, session: "pre-commit" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "safety" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "pre-commit" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "safety" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "mypy" }
           - { python-version: "3.10", os: ubuntu-latest, session: "mypy" }
-          - { python-version: "3.9", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "tests" }
           - { python-version: "3.10", os: ubuntu-latest, session: "tests" }
-          - { python-version: "3.9", os: ubuntu-latest, session: "tests" }
-          - { python-version: "3.10", os: macos-latest, session: "tests" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "typeguard" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "xdoctest" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "docs-build" }
+          - { python-version: "3.11", os: macos-latest, session: "tests" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "typeguard" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "xdoctest" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "docs-build" }
 
     env:
       NOXSESSION: ${{ matrix.session }}
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -65,7 +65,7 @@ jobs:
           print("::set-output name=result::{}".format(result))
 
       - name: Restore pre-commit cache
-        uses: actions/cache@v3.0.1
+        uses: actions/cache@v3
         if: matrix.session == 'pre-commit'
         with:
           path: ~/.cache/pre-commit
@@ -86,7 +86,7 @@ jobs:
 
       - name: Upload documentation
         if: matrix.session == 'docs-build'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: docs
           path: docs/_build
@@ -96,12 +96,12 @@ jobs:
     needs: tests
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4.3.0
         with:
-          python-version: 3.9
+          python-version: "3.11"
 
       - name: Upgrade pip
         run: |
@@ -119,7 +119,7 @@ jobs:
           nox --version
 
       - name: Download coverage data
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3.0.1
         with:
           name: coverage-data
 
@@ -134,4 +134,4 @@ jobs:
           nox --force-color --session=coverage -- xml
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3.0.0
+        uses: codecov/codecov-action@v3.1.1

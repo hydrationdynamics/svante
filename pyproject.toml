@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "svante"
-version = "0.3.3"
+version = "0.3.4"
 description = "Configurable Arrhenius plots with uncertainties and ratios"
 authors = ["Joel Berendzen <joel@generisbio.com>"]
 license = "BSD-3-Clause"
@@ -18,6 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Scientific/Engineering :: Chemistry"
 ]
 keywords = [
@@ -33,23 +34,23 @@ keywords = [
 Changelog = "https://github.com/joelb123/svante/releases"
 
 [tool.poetry.dependencies]
-python = "^3.8.0,<3.11"
-typer = "*"
-pandas = "*"
-matplotlib = "*"
-numpy = "*"
-scipy = "*"
-pydove = "*"
-Pint = "*"
-uncertainties = "*"
-shellingham = "*"
-colorama = "*"
-tabulate = "*"
-loguru = "*"
-schema = "*"
-toml = "*"
-attrs = "*"
-statsdict = "*"
+python = "^3.8.0,<4.0"
+attrs = ">=21.4.0"
+colorama = ">=0.4.4"
+loguru = ">=0.6.0"
+matplotlib = ">=3.5.1"
+numpy = ">=1.22.1"
+pandas = ">=1.4.0"
+pint = ">=0.18"
+pydove = ">=0.3.5"
+schema = ">=0.7.5"
+scipy = ">=1.7.3"
+shellingham = ">1.4.0"
+statsdict = ">=0.1.5"
+tabulate = ">=0.8.9"
+toml = ">=0.10.2"
+typer = ">=0.4.0"
+uncertainties = ">=3.1.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
@@ -85,7 +86,7 @@ svante = "svante.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ['py38', 'py39', 'py310']
+target-version = ['py38', 'py39', 'py310', 'py311']
 include = '\.pyi?$'
 exclude = '''
 /(
