@@ -52,7 +52,8 @@ def plot(
     combined = conf["combined"]
     plot_params = conf["plot"]
     df = pd.read_csv(combined["filename"], sep="\t", index_col=0)
-    df[INVERSE_T_COL] = 1000.0 / df.index
+    df["Temperature"] = df.index
+    df[INVERSE_T_COL] = 1000.0 / df["Temperature"]
 
     # make fits and plots
     with plt.style.context(PLOT_STYLE):
