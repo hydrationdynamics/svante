@@ -34,7 +34,7 @@ keywords = [
 Changelog = "https://github.com/joelb123/svante/releases"
 
 [tool.poetry.dependencies]
-python = "^3.8.0,<4.0"
+python = "^3.8.0,<3.12"
 attrs = ">=21.4.0"
 colorama = ">=0.4.4"
 loguru = ">=0.6.0"
