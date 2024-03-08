@@ -50,7 +50,7 @@ def safety(session: nox.Session) -> None:
 @nox.session(python=primary_python_version)
 def mypy(session: nox.Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["src"]
+    args = session.posargs or ["svante"]
     session.run_always("pdm", "install", "-G", "tests", external=True)
     session.run("mypy", "--check-untyped-defs", *args)
 
