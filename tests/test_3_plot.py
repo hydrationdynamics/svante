@@ -28,7 +28,7 @@ def test_subcommand_help():
 @print_docstring()
 def test_combine(datadir_mgr):
     """Test Arrhenius plots and fits."""
-    datadir_mgr.add_scope("outputs from combine", module="2_combine_test")
+    datadir_mgr.add_scope("outputs from combine", module="test_2_combine")
     with datadir_mgr.in_tmp_dir(
         inpathlist=[*COMBINE_OUTPUTS, TOML_FILE],
         save_outputs=True,
