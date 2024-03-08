@@ -1,3 +1,7 @@
-sphinx=4.0.2
-sphinx-rtd-theme==0.5.2
-sphinx-click==2.7.1
+furo
+linkify-it-py
+myst_parser
+sphinx
+sphinx-autobuild
+sphinx-click
+sphinx-rtd-theme

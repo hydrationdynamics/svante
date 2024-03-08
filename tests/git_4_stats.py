@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 """Tests for data ingestion."""
 import pytest
 import sh
 
+from . import STATS_FILE
 from . import help_check
 from . import print_docstring
-from . import STATS_FILE
 
 
 # global constants

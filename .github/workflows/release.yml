@@ -4,32 +4,29 @@ on:
   push:
     branches:
       - main
-      - master
+
+permissions:
+  contents: read
 
 jobs:
-  release:
-    name: Release
+  pypi-publish:
+    name: Upload release to PyPI
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/flardl
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: Set up Python
-        uses: actions/setup-python@v4.5.0
-        with:
-          python-version: "3.11"
-
-      - name: Upgrade pip
-        run: |
-          pip install --constraint=.github/workflows/constraints.txt pip
-          pip --version
-
-      - name: Install Poetry
-        run: |
-          pip install --constraint=.github/workflows/constraints.txt poetry
-          poetry --version
+      - name: Install pdm and pdm-version
+        run: pipx install --include-deps pdm-version
 
       - name: Check if there is a parent commit
         id: check-parent-commit
@@ -39,33 +36,34 @@ jobs:
       - name: Detect and tag new version
         id: check-version
         if: steps.check-parent-commit.outputs.sha
-        uses: salsify/action-detect-and-tag-new-version@v2.0.3
+        uses: salsify/action-detect-and-tag-new-version@v2
         with:
           version-command: |
-            bash -o pipefail -c "poetry version | awk '{ print \$2 }'"
+            bash -o pipefail -c "pdm show --version"
 
       - name: Bump version for developmental release
         if: "! steps.check-version.outputs.tag"
         run: |
-          poetry version patch &&
-          version=$(poetry version | awk '{ print $2 }') &&
-          poetry version $version.dev.$(date +%s)
+          version=$(pdm show --version) &&
+          pdm version $version.dev.$(date +%s)
 
       - name: Build package
-        run: |
-          poetry build --ansi
+        run: pdm build
 
       - name: Publish package on PyPI
         if: steps.check-version.outputs.tag
-        uses: pypa/gh-action-pypi-publish@v1.6.4
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Publish package on TestPyPI
         if: "! steps.check-version.outputs.tag"
-        uses: pypa/gh-action-pypi-publish@v1.6.4
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
+          repository-url: https://test.pypi.org/legacy/
+
+      - name: Publish the release notes
+        uses: release-drafter/release-drafter@v6
+        with:
+          publish: ${{ steps.check-version.outputs.tag != '' }}
+          tag: ${{ steps.check-version.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

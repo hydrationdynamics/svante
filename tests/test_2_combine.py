@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for data ingestion."""
 # standard library imports
 import sys
@@ -9,9 +8,10 @@ import sh
 
 from . import COMBINE_INPUTS
 from . import COMBINE_OUTPUTS
+from . import TOML_FILE
 from . import help_check
 from . import print_docstring
-from . import TOML_FILE
+
 
 # global constants
 svante = sh.Command("svante")

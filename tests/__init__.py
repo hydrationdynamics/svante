@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Base for pytest testing."""
 # standard library imports
 import contextlib
@@ -10,6 +9,7 @@ from typing import Callable
 import pytest
 import sh
 from sh import ErrorReturnCode
+
 
 # third-party imports
 
@@ -34,10 +34,7 @@ def working_directory(path: str) -> None:
 def help_check(subcommand: str) -> None:
     """Test help function for subcommand."""
     print(f"Test {subcommand} help.")
-    if subcommand == "global":
-        help_command = ["--help"]
-    else:
-        help_command = [subcommand, "--help"]
+    help_command = ["--help"] if subcommand == "global" else [subcommand, "--help"]
     try:
         output = sh.svante(help_command)
     except ErrorReturnCode as errors:

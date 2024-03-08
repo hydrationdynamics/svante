@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Combine multiple TSV files containing rates into one file."""
 # standard library imports
 import sys
@@ -9,9 +8,9 @@ from loguru import logger
 from statsdict import Stat
 
 from .common import APP
-from .common import read_conf_file
 from .common import STATE
 from .common import STATS
+from .common import read_conf_file
 
 
 @APP.command()

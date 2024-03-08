@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 """Global constants and shared functions in common."""
 # standard library imports
 from __future__ import annotations
 
 import sys
-from pathlib import Path
+from typing import TYPE_CHECKING  # pylint: disable=no-name-in-module
 from typing import Any
 from typing import TypedDict  # pylint: disable=no-name-in-module
 
@@ -20,6 +19,10 @@ from schema import Use  # type: ignore
 from statsdict import StatsDict
 
 from . import __doc__ as docstring
+
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 # global constants

@@ -1,15 +1,14 @@
 """Sphinx configuration."""
-from datetime import datetime
 
 
 project = "Svante"
 author = "Joel Berendzen"
-copyright = f"{datetime.now().year}, {author}"
+copyright = "2024 Joel Berendzen"  # noqa: A001
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx_rtd_theme",
     "sphinx_click",
+    "myst_parser"
 ]
 autodoc_typehints = "description"
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"

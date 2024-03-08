@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Command-line interface and logging configuration."""
 # standard-library imports
 from importlib import metadata
@@ -14,9 +13,9 @@ from .plot import plot
 
 
 # global constants
-unused_cli_funcs = (combine, plot)  # noqa: F841
+unused_cli_funcs = (combine, plot)
 VERSION: str = metadata.version(NAME)
-click_object = typer.main.get_command(APP)  # noqa: F841
+click_object = typer.main.get_command(APP)
 
 
 def version_callback(value: bool) -> None:

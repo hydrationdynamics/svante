@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for basic CLI function."""
 # third-party imports
 import pytest
@@ -7,6 +6,7 @@ import sh
 from . import help_check
 from . import print_docstring
 from . import working_directory
+
 
 # global constants
 svante = sh.Command("svante")

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Make Arrhenius plot with fits."""
 # standard library imports
 from pathlib import Path
@@ -13,9 +12,9 @@ from scipy.constants import gas_constant  # type: ignore
 from statsdict import Stat
 
 from .common import APP
-from .common import read_conf_file
 from .common import STATE
 from .common import STATS
+from .common import read_conf_file
 
 
 # from uncertainties import unumpy  # type: ignore

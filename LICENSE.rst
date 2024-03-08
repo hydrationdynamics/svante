@@ -1,7 +1,7 @@
 BSD 3-Clause License
 ====================
 
-Copyright © 2021, GenerisBio LLC
+Copyright © 2024, GenerisBio LLC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

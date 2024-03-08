@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for data ingestion."""
 # standard library imports
 import shutil
@@ -9,10 +8,11 @@ import pytest
 import sh
 
 from . import COMBINE_OUTPUTS
-from . import help_check
-from . import print_docstring
 from . import STATS_FILE
 from . import TOML_FILE
+from . import help_check
+from . import print_docstring
+
 
 # global constants
 svante = sh.Command("svante")
@@ -30,7 +30,7 @@ def test_combine(datadir_mgr):
     """Test Arrhenius plots and fits."""
     datadir_mgr.add_scope("outputs from combine", module="2_combine_test")
     with datadir_mgr.in_tmp_dir(
-        inpathlist=COMBINE_OUTPUTS + [TOML_FILE],
+        inpathlist=[*COMBINE_OUTPUTS, TOML_FILE],
         save_outputs=True,
         outscope="global",
     ):
