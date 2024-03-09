@@ -9,7 +9,7 @@ import nox
 
 os.environ.update({"PDM_IGNORE_SAVED_PYTHON": "1"})
 
-package = "flardl"
+package = "svante"
 python_versions = ["3.12", "3.11", "3.10", "3.9"]
 primary_python_version = "3.12"
 nox.needs_version = ">= 2021.10.1"
