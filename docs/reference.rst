@@ -1,10 +1,6 @@
 Reference
 =========
 
-.. contents::
-    :local:
-    :backlinks: none
-
 
 svante.__main__
 ---------------

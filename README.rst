@@ -66,7 +66,8 @@ Features
 Requirements
 ------------
 
-* Tested on Python 3.10 and 3.11 on Linux and Mac
+* Tested on the latest and earliest supported python on Linux and the latest
+  python on MacOS.
 
 
 Installation

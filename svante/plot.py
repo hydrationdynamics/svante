@@ -98,7 +98,7 @@ def plot(
             if STATE["verbose"]:
                 print(res[col].summary())
             label = (
-                rf"$\rm \Delta H={delta_h:.0f}$ kJ/mol, "
+                rf"$\Delta H^\ddag = {delta_h:.0f}$  kJ/mol, "
                 + r"$A=10^{"
                 + f"{log_preexp:.0f}"
                 + r"}s^{-1}$ "
